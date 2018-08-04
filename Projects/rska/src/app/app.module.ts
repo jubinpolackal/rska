@@ -1,18 +1,32 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
-
+import { AgmCoreModule } from '@agm/core';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
+import { AboutComponent } from './components/about/about.component';
+import { InstructorsComponent } from './components/instructors/instructors.component';
+import { GalleryComponent } from './components/gallery/gallery.component';
+import { ContactComponent } from './components/contact/contact.component';
+import { ClassdetailsComponent } from './components/classdetails/classdetails.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+    AboutComponent,
+    InstructorsComponent,
+    GalleryComponent,
+    ContactComponent,
+    ClassdetailsComponent
   ],
   imports: [
     BrowserModule,
-    AngularFontAwesomeModule
+    AngularFontAwesomeModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyBtrDbB-MSzw_x1RVpT074tdx228oYXTKI',
+      libraries: ['places']
+    })
   ],
   providers: [],
   bootstrap: [AppComponent],
