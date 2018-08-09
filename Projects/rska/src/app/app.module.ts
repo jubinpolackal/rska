@@ -10,6 +10,8 @@ import { GalleryComponent } from './components/gallery/gallery.component';
 import { ContactComponent } from './components/contact/contact.component';
 import { ClassdetailsComponent } from './components/classdetails/classdetails.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { DescriptionComponent } from './components/description/description.component';
+
 
 @NgModule({
   declarations: [
@@ -20,7 +22,8 @@ import { FooterComponent } from './components/footer/footer.component';
     GalleryComponent,
     ContactComponent,
     ClassdetailsComponent,
-    FooterComponent
+    FooterComponent,
+    DescriptionComponent
   ],
   imports: [
     BrowserModule,
