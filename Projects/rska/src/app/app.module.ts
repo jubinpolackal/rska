@@ -11,7 +11,7 @@ import { ContactComponent } from './components/contact/contact.component';
 import { ClassdetailsComponent } from './components/classdetails/classdetails.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { DescriptionComponent } from './components/description/description.component';
-
+import { NgxTwitterTimelineModule } from 'ngx-twitter-timeline';
 
 @NgModule({
   declarations: [
@@ -28,6 +28,7 @@ import { DescriptionComponent } from './components/description/description.compo
   imports: [
     BrowserModule,
     AngularFontAwesomeModule,
+    NgxTwitterTimelineModule.forRoot(),
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyBtrDbB-MSzw_x1RVpT074tdx228oYXTKI',
       libraries: ['places']

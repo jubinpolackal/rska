@@ -18,6 +18,12 @@
         </div>
         <div class="col-sm">
           <h1 class="main-header">Twitter Feed</h1>
+          <div class="twitter-feed-container">
+            <ngx-twitter-timeline
+              [data]="{sourceType: 'url', url: 'https://twitter.com/twitterdev'}"
+              [opts]="{tweetLimit: 5}"
+            ></ngx-twitter-timeline>
+          </div>
         </div>
     </div>
 </div>
