@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { AgmCoreModule } from '@agm/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { AboutComponent } from './components/about/about.component';
@@ -29,6 +30,8 @@ import { NgxTwitterTimelineModule } from 'ngx-twitter-timeline';
     BrowserModule,
     AngularFontAwesomeModule,
     NgxTwitterTimelineModule.forRoot(),
+    FormsModule,
+    ReactiveFormsModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyBtrDbB-MSzw_x1RVpT074tdx228oYXTKI',
       libraries: ['places']

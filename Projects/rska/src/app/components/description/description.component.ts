@@ -7,6 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DescriptionComponent implements OnInit {
 
+  twitterOptions = {
+    tweetLimit: 5
+  };
+
+  twitterData = {
+    sourceType: 'url',
+    url: 'https://twitter.com/twitterdev'
+  };
   constructor() { }
 
   ngOnInit() {

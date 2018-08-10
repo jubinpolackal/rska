@@ -1,9 +1,9 @@
 <div class="about-container">
     <div class="row">
         <div class="col-sm">
-          <img src="../../../assets/images/about-image.JPG" alt="" class="about-title-image">
+          <img src="../../../assets/images/about-image.JPG" alt="" class="img-fluid">
         </div>
-        <div class="col-sm">
+        <div class="col-sm about-content-view">
           <h1 class="main-header">ABOUT</h1>
           <p align="justify" class="text-style">Teaching traditional Shotokan Karate in Royston. The content needs to be updated with valid text.
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras volutpat condimentum enim, id porttitor
@@ -16,12 +16,12 @@
                   metus vel mi malesuada sollicitudin. Quisque laoreet diam ac orci rutrum luctus.
           </p>
         </div>
-        <div class="col-sm">
-          <h1 class="main-header">Twitter Feed</h1>
+        <div class="col-sm twitter-feed-enclosing">
+          <!-- <h1 class="main-header">Twitter Feed</h1> -->
           <div class="twitter-feed-container">
             <ngx-twitter-timeline
-              [data]="{sourceType: 'url', url: 'https://twitter.com/twitterdev'}"
-              [opts]="{tweetLimit: 5}"
+              [data]="twitterData"
+              [opts]= "twitterOptions"
             ></ngx-twitter-timeline>
           </div>
         </div>

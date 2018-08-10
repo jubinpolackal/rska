@@ -59,9 +59,38 @@
   color: #7565b2;
 }
 
+.about-content-view {
+  overflow: scroll;
+  overflow-y: auto;
+  overflow-x: auto;
+}
+
 .twitter-feed-container {
-  overflow: hidden;
-  height: 380px;
+  overflow: scroll;
+  overflow-y:auto;
+  border-color: aquamarine;
+  border-width: 2px;
+  height: 400px;
   margin-right: 10px;
   padding-right: 10px;
+}
+
+.twitter-feed-enclosing {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.generic-btn {
+  background-color: #7565b2;
+  color: white;
+}
+
+.generic-form-btn {
+  float: right;
+  margin-bottom: 10px;
+}
+
+#contact-form-btn {
+  width: 200px;
 }
