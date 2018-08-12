@@ -6,6 +6,8 @@ var path = require('path');
 var fs = require('fs');
 var jwt = require('jsonwebtoken');
 var config = require('./config');
+var publicRoutes = require('./routes/routes-public');
+var routesProtected = require('./routes/routes-protected');
 
 const app = express();
 
@@ -24,6 +26,12 @@ app.get('/', (req, res)=>{
   console.log("Sending index.html ...");
   res.sendFile(path.join(__dirname, 'dist/rska'));
 });
+
+var publicRoutes = require('./routes/routes-public');
+var routesProtected = require('./routes/routes-protected');
+
+app.use('/public', publicRoutes);
+
 
 const server = http.createServer(app);
 //Set Port

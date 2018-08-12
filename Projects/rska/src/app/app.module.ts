@@ -13,6 +13,7 @@ import { ClassdetailsComponent } from './components/classdetails/classdetails.co
 import { FooterComponent } from './components/footer/footer.component';
 import { DescriptionComponent } from './components/description/description.component';
 import { NgxTwitterTimelineModule } from 'ngx-twitter-timeline';
+import { ApiService } from './services/api.service';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,9 @@ import { NgxTwitterTimelineModule } from 'ngx-twitter-timeline';
       libraries: ['places']
     })
   ],
-  providers: [],
+  providers: [
+    ApiService
+  ],
   bootstrap: [AppComponent],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
