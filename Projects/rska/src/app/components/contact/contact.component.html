@@ -44,6 +44,16 @@
     </form>
   </div>
   <div class="container">
+      <div class="alert alert-success alert-dismissible" *ngIf="shouldShowSuccessMessage">
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+          {{ successMessage }}
+        </div>
+        <div class="alert alert-danger alert-dismissible" *ngIf="shouldShowErrorMessage">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+          {{ errorMessage }}
+        </div>
+  </div>
+  <div class="container">
     <agm-map [latitude]="51.509865" [longitude]="-0.118092" class="agm-map">
       <agm-marker [latitude]="52.6522568" [longitude]="1.2870537"></agm-marker>
     </agm-map>

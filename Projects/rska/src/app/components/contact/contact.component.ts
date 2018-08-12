@@ -1,3 +1,4 @@
+import { ApiService } from './../../services/api.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 
@@ -13,7 +14,13 @@ export class ContactComponent implements OnInit {
   email: FormControl;
   message: FormControl;
 
-  constructor(private formBuilder: FormBuilder) {
+  successMessage = 'Thank You for reaching out to us. We will be contacting you soon.';
+  errorMessage = '';
+  shouldShowSuccessMessage = false;
+  shouldShowErrorMessage = false;
+
+  constructor(private formBuilder: FormBuilder,
+              private apiService: ApiService) {
 
   }
 
@@ -43,11 +50,17 @@ export class ContactComponent implements OnInit {
     console.log('Submit tapped ...');
     if (this.contactForm.valid) {
       console.log('Form Submitted ...');
-      console.log(this.name.value);
-      console.log(this.email.value);
-      console.log(this.phone.value);
-      console.log(this.message.value);
-      this.contactForm.reset();
+      this.apiService.postContactUs(this.name.value,
+                                    this.phone.value,
+                                    this.email.value,
+                                    this.message.value).subscribe(res => {
+                                      console.dir(res);
+                                      if (res.status === 200 ) {
+                                        alert(this.successMessage);
+                                      } else {
+                                        alert(res.error);
+                                      }
+                                    });
     } else {
       console.log('Form not valid');
       this.validateAllFormFields(this.contactForm);

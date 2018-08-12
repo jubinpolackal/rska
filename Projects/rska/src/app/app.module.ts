@@ -14,6 +14,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { DescriptionComponent } from './components/description/description.component';
 import { NgxTwitterTimelineModule } from 'ngx-twitter-timeline';
 import { ApiService } from './services/api.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { ApiService } from './services/api.service';
     NgxTwitterTimelineModule.forRoot(),
     FormsModule,
     ReactiveFormsModule,
+    HttpClientModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyBtrDbB-MSzw_x1RVpT074tdx228oYXTKI',
       libraries: ['places']

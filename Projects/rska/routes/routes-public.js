@@ -6,6 +6,22 @@ var jwt = require('jsonwebtoken')
 var app = express();
 var apiRoutes = express.Router();
 var http = require('http');
+var nodemailer = require('nodemailer');
+
+var transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: '', //Gmail adddress
+    pass: '' //Gmail password
+  }
+});
+
+var mailOptions = {
+  from: '',
+  to: '',
+  subject: '',
+  text: ''
+};
 
 
 app.use(bodyParser.urlencoded({
@@ -17,7 +33,6 @@ apiRoutes.route('/contact-email').post((req, res, next)=>{
   var contactMessage = req.body;
   var userResponse = responses.contactEmail;
   console.log('Calling public/contact-email ...');
-  console.dir (req);
   if(contactMessage.constructor === Object &&
     Object.keys(contactMessage).length === 0) {
     userResponse.status = 400;
@@ -33,9 +48,22 @@ apiRoutes.route('/contact-email').post((req, res, next)=>{
           userResponse.error = 'Error sending message. Please fill in all the required fields';
           console.log('Not valid message ...');
     } else {
-      userResponse.status = 200;
-      userResponse.error = '';
-      res.send(userResponse);
+      mailOptions.from = 'test@gmail.com';
+      mailOptions.to = 'jubinpolackal@gmail.com';
+      mailOptions.subject = 'ATTENTION: '+contactMessage.name+' would like to know something about the classes';
+      mailOptions.text = contactMessage.message+'\r\nName: '+contactMessage.name+',\r\nEmail: '+contactMessage.email+',\r\nPhone: '+contactMessage.phone;
+      transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+          console.log(error);
+          userResponse.status = 400;
+          userResponse.error = error;
+        } else {
+          console.log('Email sent: ' + info.response);
+          userResponse.status = 200;
+          userResponse.error = '';
+          res.send(userResponse);
+        }
+      });
     }
   }
 });

@@ -6,7 +6,7 @@ import { catchError, tap, map } from 'rxjs/operators';
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
 };
-const baseURL = 'http://localhost:3000';
+
 const publicURL = '/public';
 const protectedURL = '/protected';
 
@@ -18,20 +18,30 @@ export class ApiService {
 
   constructor(private http: HttpClient) { }
 
-  public getPublic(method) {
+  private getPublic(method) {
 
   }
 
-  public postPublic(body, method): Observable<any> {
-    const url = baseURL + publicURL + method;
+  private postPublic(body, method): Observable<any> {
+    const url = publicURL + method;
     return this.http.post(url, body, httpOptions);
   }
 
-  public getProtected(body, method) {
+  private getProtected(body, method) {
 
   }
 
-  public postProtected(body, method) {
+  private postProtected(body, method) {
 
+  }
+
+  public postContactUs(name, phone, email, message) {
+    let body = {
+      'phone': phone,
+      'email': email,
+      'name': name,
+      'message': message
+    };
+    return this.postPublic(body, '/contact-email');
   }
 }

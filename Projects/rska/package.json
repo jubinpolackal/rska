@@ -36,6 +36,7 @@
     "morgan": "^1.9.0",
     "ng-slideshow": "^0.8.2",
     "ngx-twitter-timeline": "^0.1.4",
+    "nodemailer": "^4.6.7",
     "path": "^0.12.7",
     "popper.js": "^1.14.3",
     "rxjs": "^6.2.2",
