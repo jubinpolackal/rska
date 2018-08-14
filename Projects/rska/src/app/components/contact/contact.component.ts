@@ -49,7 +49,6 @@ export class ContactComponent implements OnInit {
   onSubmit() {
     console.log('Submit tapped ...');
     if (this.contactForm.valid) {
-      console.log('Form Submitted ...');
       this.apiService.postContactUs(this.name.value,
                                     this.phone.value,
                                     this.email.value,

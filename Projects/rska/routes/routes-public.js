@@ -7,6 +7,7 @@ var app = express();
 var apiRoutes = express.Router();
 var http = require('http');
 var nodemailer = require('nodemailer');
+var jwt = require('jsonwebtoken');
 
 var transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -27,7 +28,10 @@ var mailOptions = {
 app.use(bodyParser.urlencoded({
   extended: true
 }));
+
 app.use(bodyParser.json());
+
+app.set('tokenSecret', config.jwtSecretKey);
 
 apiRoutes.route('/contact-email').post((req, res, next)=>{
   var contactMessage = req.body;
@@ -49,7 +53,7 @@ apiRoutes.route('/contact-email').post((req, res, next)=>{
           console.log('Not valid message ...');
     } else {
       mailOptions.from = 'test@gmail.com';
-      mailOptions.to = 'jubinpolackal@gmail.com';
+      mailOptions.to = 'test@gmail.com';
       mailOptions.subject = 'ATTENTION: '+contactMessage.name+' would like to know something about the classes';
       mailOptions.text = contactMessage.message+'\r\nName: '+contactMessage.name+',\r\nEmail: '+contactMessage.email+',\r\nPhone: '+contactMessage.phone;
       transporter.sendMail(mailOptions, function(error, info){
@@ -57,6 +61,7 @@ apiRoutes.route('/contact-email').post((req, res, next)=>{
           console.log(error);
           userResponse.status = 400;
           userResponse.error = error;
+          res.send(userResponse);
         } else {
           console.log('Email sent: ' + info.response);
           userResponse.status = 200;
@@ -64,6 +69,47 @@ apiRoutes.route('/contact-email').post((req, res, next)=>{
           res.send(userResponse);
         }
       });
+    }
+  }
+});
+
+apiRoutes.route('/login').post((req, res, next) => {
+  var user = req.body;
+  var userResponse = responses.login;
+  console.log('Calling public/login ...');
+  if(user.constructor === Object &&
+    Object.keys(user).length === 0) {
+    userResponse.status = 400;
+    userResponse.error = "Please send valid credentials";
+    console.log('Not valid user ...');
+    res.send(userResponse);
+  } else {
+    console.log('Parsing user ...');
+    if (!user.userName ||
+        !user.password) {
+      userResponse.status = 400;
+      userResponse.error = 'Error logging in. Please fill in all the required fields';
+      console.log('Not valid user ...');
+      res.send(userResponse);
+    } else {
+      if (user.userName === 'Admin' &&
+          user.password ==='Admin') {
+        var token = jwt.sign({data:user.userName},
+                              app.get('tokenSecret'),
+                              {expiresIn:'5h'});
+        userResponse.token = token;
+        userResponse.status = 200;
+        userResponse.userName = user.userName;
+        userResponse.error = 'Login success';
+        console.log('Login success. Sending response ...');
+        res.send(userResponse);
+      } else {
+        userResponse.status = 400;
+        userResponse.error = 'Error logging in. Invalid credentials.';
+        userResponse.token = '';
+        console.log('Not valid user ...');
+        res.send(userResponse);
+      }
     }
   }
 });

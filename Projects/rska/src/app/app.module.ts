@@ -3,6 +3,8 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { AgmCoreModule } from '@agm/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+//import { AppRoutingModule } from './app-routing.module';
+import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { AboutComponent } from './components/about/about.component';
@@ -15,6 +17,15 @@ import { DescriptionComponent } from './components/description/description.compo
 import { NgxTwitterTimelineModule } from 'ngx-twitter-timeline';
 import { ApiService } from './services/api.service';
 import { HttpClientModule } from '@angular/common/http';
+import { AdminComponent } from './components/admin/admin.component';
+import { LoginComponent } from './components/login/login.component';
+
+const appRoutes: Routes = [
+  { path: 'home', component: HomeComponent },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent },
+  { path: 'admin', component: AdminComponent }
+];
 
 @NgModule({
   declarations: [
@@ -26,10 +37,15 @@ import { HttpClientModule } from '@angular/common/http';
     ContactComponent,
     ClassdetailsComponent,
     FooterComponent,
-    DescriptionComponent
+    DescriptionComponent,
+    AdminComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
+    RouterModule.forRoot(
+      appRoutes
+    ),
     AngularFontAwesomeModule,
     NgxTwitterTimelineModule.forRoot(),
     FormsModule,

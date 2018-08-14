@@ -1,0 +1,20 @@
+<div class="admin-navbar">
+  <span><fa [name]="'user'" [size]=5></fa></span>
+  <span><p> Welcome RSKA Admin</p></span>
+</div>
+<div class="row">
+  <div class="col-sm-2">
+      <ul class="admin-list">
+          <li class="admin-list-item"><a class = "btn btn-primary" href="#">Gallery</a></li>
+          <li class="admin-list-item"><a class = "btn btn-primary" href="#">News Flash</a></li>
+          <li class="admin-list-item"><a class = "btn btn-primary" href="#">Location</a></li>
+          <li class="admin-list-item"><a class = "btn btn-primary" href="#">Class</a></li>
+          <li class="admin-list-item"><a class = "btn btn-primary" href="#">Instructors</a></li>
+          <li class="admin-list-item"><a class = "btn btn-primary" href="#">Copyright Text</a></li>
+        </ul>
+  </div>
+  <div class="col-sm-8 admin-container">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+

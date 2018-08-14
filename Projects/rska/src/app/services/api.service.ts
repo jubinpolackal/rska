@@ -36,12 +36,20 @@ export class ApiService {
   }
 
   public postContactUs(name, phone, email, message) {
-    let body = {
+    const body = {
       'phone': phone,
       'email': email,
       'name': name,
       'message': message
     };
     return this.postPublic(body, '/contact-email');
+  }
+
+  public postLogin(userName, password) {
+    const body = {
+      'userName': userName,
+      'password': password
+    };
+    return this.postPublic(body, '/login');
   }
 }

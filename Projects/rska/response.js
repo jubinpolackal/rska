@@ -5,4 +5,10 @@ response.contactEmail = {
   error: ''
 }
 
+response.login = {
+  status: 200,
+  token: '',
+  error: ''
+}
+
 module.exports = response;
