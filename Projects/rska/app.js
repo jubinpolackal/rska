@@ -7,7 +7,6 @@ var fs = require('fs');
 var jwt = require('jsonwebtoken');
 var config = require('./config');
 var publicRoutes = require('./routes/routes-public');
-var routesProtected = require('./routes/routes-protected');
 
 const app = express();
 
@@ -28,10 +27,36 @@ app.get('/', (req, res)=>{
 });
 
 var publicRoutes = require('./routes/routes-public');
-var routesProtected = require('./routes/routes-protected');
 
 app.use('/public', publicRoutes);
 
+function verifyToken(req,res,next) {
+  var token = req.body.token || 
+              req.query.token || 
+              req.headers['x-access-token'] || 
+              req.headers['authorization'];
+    if (token) {
+    // verifies secret and checks exp
+        jwt.verify(token, config.jwtSecretKey, function(err, decoded) {
+            if (err) { //failed verification
+                console.log("verification failed");
+                return res.status(403).send({
+                    "error": true
+                });
+            }
+            req.decoded = decoded;
+            next(); //no error, proceed
+        });
+    } else {
+        // forbidden without token
+        return res.status(403).send({
+            "error": true
+        });
+    }
+}
+
+//Protected Routes
+app.use('/album', verifyToken, require('./routes/album'));
 
 const server = http.createServer(app);
 //Set Port

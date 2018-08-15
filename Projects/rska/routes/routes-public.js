@@ -8,6 +8,7 @@ var apiRoutes = express.Router();
 var http = require('http');
 var nodemailer = require('nodemailer');
 var jwt = require('jsonwebtoken');
+var db = require('../db');
 
 var transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -92,24 +93,25 @@ apiRoutes.route('/login').post((req, res, next) => {
       console.log('Not valid user ...');
       res.send(userResponse);
     } else {
-      if (user.userName === 'Admin' &&
-          user.password ==='Admin') {
-        var token = jwt.sign({data:user.userName},
-                              app.get('tokenSecret'),
-                              {expiresIn:'5h'});
-        userResponse.token = token;
-        userResponse.status = 200;
-        userResponse.userName = user.userName;
-        userResponse.error = 'Login success';
-        console.log('Login success. Sending response ...');
-        res.send(userResponse);
-      } else {
-        userResponse.status = 400;
-        userResponse.error = 'Error logging in. Invalid credentials.';
-        userResponse.token = '';
-        console.log('Not valid user ...');
-        res.send(userResponse);
-      }
+      db.adminLogin(user.userName, user.password, (msg, status) => {
+        if (status) {
+          var token = jwt.sign({data:user.userName},
+                                app.get('tokenSecret'),
+                                {expiresIn:'5h'});
+          userResponse.token = token;
+          userResponse.status = 200;
+          userResponse.userName = user.userName;
+          userResponse.error = msg;
+          console.log(msg);
+          res.send(userResponse);
+        } else {
+          userResponse.status = 400;
+          userResponse.error = msg;
+          userResponse.token = '';
+          console.log(msg);
+          res.send(userResponse);
+        }
+      });
     }
   }
 });

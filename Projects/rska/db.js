@@ -1,11 +1,69 @@
 
 const sqlite3 = require('sqlite3').verbose();
 
-var db = {
-  adminLogin: function(userName, password, success, error) {
-
+let database = new sqlite3.Database('./assets/database/rska.sqlite', 
+sqlite3.OPEN_READWRITE,
+(err) => {
+  if (err) {
+    console.log('Unable to opne database ...');
+    console.log(err.message);
+  } else {
+    console.log('Database opened successfully ...');
   }
+});
 
+var db = {
+  closeDB: function() {
+    database.close();
+  },
+
+  adminLogin: function(userName, password, callback) {
+    let sql = 'SELECT COUNT(*) AS userCount FROM adminuser WHERE UserName=? AND password=?';
+
+    database.get(sql, [userName, password], (err, row)=>{
+      if (err) {
+        console.log('Fetching admin user failed ...');
+        callback('Error logging in. Contact IT support.', false);
+      } else {
+        console.log(row);
+        console.log(row.userCount);
+        let count = row.userCount;
+        if (count > 0 ){
+          callback('Login success.', true);
+        } else {
+          callback('Error logging in. Invalid credentials.', false);
+        }
+      }
+    });
+  },
+
+  createAlbum: function(albumName, description, callBack ) {
+
+  },
+
+  updateAlbum: function(albumId, albumName, description, callBack) {
+
+  },
+
+  deleteAlbum: function(id, callBack) {
+
+  },
+
+  getAllAlbums(callBack) {
+    let sql = 'SELECT * FROM album';
+    database.get(sql, [], (err, rows)=>{
+      if (err) {
+        callback('Error logging in. Contact IT support.', false);
+        console.log('Fetching admin user failed ...');
+      } else {
+        console.log(rows);
+        if (rows.count > 0 ){
+          callback('Found albums.', true);
+        }
+        callBack(rows);
+      }
+    });
+  }
 };
 
 module.exports = db;
