@@ -19,12 +19,29 @@ import { ApiService } from './services/api.service';
 import { HttpClientModule } from '@angular/common/http';
 import { AdminComponent } from './components/admin/admin.component';
 import { LoginComponent } from './components/login/login.component';
+import { GallerymanagerComponent } from './components/gallerymanager/gallerymanager.component';
+import { NewsflashmanagerComponent } from './components/newsflashmanager/newsflashmanager.component';
+import { LocationmanagerComponent } from './components/locationmanager/locationmanager.component';
+import { ClassmanagerComponent } from './components/classmanager/classmanager.component';
+import { InstructorsmanagerComponent } from './components/instructorsmanager/instructorsmanager.component';
+import { CopyrightmanagerComponent } from './components/copyrightmanager/copyrightmanager.component';
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
-  { path: 'admin', component: AdminComponent }
+  {
+    path: 'admin',
+    component: AdminComponent,
+    children: [
+      {path: 'gallerymanager', component: GallerymanagerComponent },
+      {path: 'newsflashmanager', component: NewsflashmanagerComponent },
+      {path: 'locationmanager', component: LocationmanagerComponent },
+      {path: 'classmanager', component: ClassmanagerComponent },
+      {path: 'instructorsmanager', component: InstructorsmanagerComponent },
+      {path: 'copyrightmanager', component: CopyrightmanagerComponent }
+    ]
+  }
 ];
 
 @NgModule({
@@ -39,7 +56,13 @@ const appRoutes: Routes = [
     FooterComponent,
     DescriptionComponent,
     AdminComponent,
-    LoginComponent
+    LoginComponent,
+    GallerymanagerComponent,
+    NewsflashmanagerComponent,
+    LocationmanagerComponent,
+    ClassmanagerComponent,
+    InstructorsmanagerComponent,
+    CopyrightmanagerComponent
   ],
   imports: [
     BrowserModule,

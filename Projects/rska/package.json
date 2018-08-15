@@ -42,6 +42,7 @@
     "rxjs": "^6.2.2",
     "rxjs-compat": "^6.2.2",
     "serve-favicon": "^2.5.0",
+    "sqlite3": "^4.0.2",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {
