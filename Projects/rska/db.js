@@ -13,6 +13,7 @@ sqlite3.OPEN_READWRITE,
 });
 
 var db = {
+
   closeDB: function() {
     database.close();
   },
@@ -33,6 +34,7 @@ var db = {
         } else {
           callback('Error logging in. Invalid credentials.', false);
         }
+        this.closeDB();
       }
     });
   },
@@ -50,18 +52,18 @@ var db = {
   },
 
   getAllAlbums(callBack) {
+    var localdb = new sqlite3.Database('./assets/database/rska.sqlite', sqlite3.OPEN_READONLY);
     let sql = 'SELECT * FROM album';
-    database.get(sql, [], (err, rows)=>{
+    localdb.all(sql, (err, rows)=>{
       if (err) {
         callback('Error logging in. Contact IT support.', false);
         console.log('Fetching admin user failed ...');
       } else {
+        console.log('Album rows: ');
         console.log(rows);
-        if (rows.count > 0 ){
-          callback('Found albums.', true);
-        }
-        callBack(rows);
+        callBack(rows, true);
       }
+      localdb.close();
     });
   }
 };

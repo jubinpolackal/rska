@@ -19,17 +19,6 @@ app.use(bodyParser.json());
 // Angular DIST output folder
 app.use(express.static(path.join(__dirname, 'dist/rska')));
 
-
-//Unprotected routes
-app.get('/', (req, res)=>{
-  console.log("Sending index.html ...");
-  res.sendFile(path.join(__dirname, 'dist/rska'));
-});
-
-var publicRoutes = require('./routes/routes-public');
-
-app.use('/public', publicRoutes);
-
 function verifyToken(req,res,next) {
   var token = req.body.token || 
               req.query.token || 
@@ -43,17 +32,30 @@ function verifyToken(req,res,next) {
                 return res.status(403).send({
                     "error": true
                 });
-            }
+            } 
+            console.log('Token validation success ...');
+            console.log(decoded);
             req.decoded = decoded;
             next(); //no error, proceed
         });
     } else {
+      console.log('Token is null or undefined...');
         // forbidden without token
         return res.status(403).send({
             "error": true
         });
     }
 }
+
+//Unprotected routes
+app.get('/', (req, res)=>{
+  console.log("Sending index.html ...");
+  res.sendFile(path.join(__dirname, 'dist/rska'));
+});
+
+var publicRoutes = require('./routes/routes-public');
+
+app.use('/public', publicRoutes);
 
 //Protected Routes
 app.use('/album', verifyToken, require('./routes/album'));

@@ -11,4 +11,10 @@ response.login = {
   error: ''
 }
 
+response.albums = {
+  status: 200,
+  albums: [],
+  error: ''
+}
+
 module.exports = response;

@@ -3,8 +3,9 @@ var express = require('express'),
     http = require('http'),
     bodyParser = require('body-parser'),
     fs = require('fs'),
-    db = require('../db');
-    config = require('../config');
+    db = require('../db'),
+    config = require('../config'),
+    responses = require('../response');
 
 var app = express();
 // Parsers
@@ -17,10 +18,17 @@ router.route('/new').post(function (req, res, body) {
     console.log('Create new album');
 });
 
-router.route('/getall').post(function (req, res, body) {
+router.route('/getall').get(function (req, res, body) {
     console.log('Get all albums');
-    db.getAllAlbums((albums) => {
-
+    var userResponse = responses.albums;
+    db.getAllAlbums((albums, status) => {
+        if (status) {
+            userResponse.albums = albums;
+            res.send(userResponse);
+        } else {
+            userResponse.status = 400;
+            res.send(userResponse);
+        }
     });
 });
 
