@@ -21,15 +21,41 @@ router.route('/new').post(function (req, res, body) {
 router.route('/getall').get(function (req, res, body) {
     console.log('Get all albums');
     var userResponse = responses.albums;
-    db.getAllAlbums((albums, status) => {
+    db.getAllAlbums((albums, status, errMsg) => {
         if (status) {
             userResponse.albums = albums;
-            res.send(userResponse);
         } else {
             userResponse.status = 400;
-            res.send(userResponse);
+            userResponse.error = errMsg;
         }
+        res.send(userResponse);
     });
+});
+
+router.route('/delete').post(function (req, res, body) {
+  console.log('Delete album');
+  var userResponse = responses.albums;
+
+  db.deleteAlbum(id, (err, status) => {
+    if (status) {
+      res.sendStatus(200);
+    } else {
+      res.sendStatus(401);
+    }
+  });
+});
+
+router.route('/create').post(function (req, res, body) {
+  console.log('Delete album');
+  var userResponse = responses.album;
+  db.deleteAlbum(id, (album, err, status) => {
+    if (status) {
+      userResponse.album = album;
+      res.send(userResponse);
+    } else {
+      res.sendStatus(401);
+    }
+  });
 });
 
 module.exports = router;

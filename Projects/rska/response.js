@@ -17,4 +17,10 @@ response.albums = {
   error: ''
 }
 
+response.album = {
+  album: {},
+  status: 200,
+  error: ''
+};
+
 module.exports = response;

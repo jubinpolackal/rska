@@ -621,9 +621,9 @@ if(false) {}
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/jubinjose/Projects/RSKA/rska/Projects/rska/node_modules/bootstrap/dist/css/bootstrap.css */"./node_modules/bootstrap/dist/css/bootstrap.css");
-__webpack_require__(/*! /home/jubinjose/Projects/RSKA/rska/Projects/rska/node_modules/font-awesome/css/font-awesome.css */"./node_modules/font-awesome/css/font-awesome.css");
-module.exports = __webpack_require__(/*! /home/jubinjose/Projects/RSKA/rska/Projects/rska/src/styles.scss */"./src/styles.scss");
+__webpack_require__(/*! /home/jubin/Documents/Projects/rska/node_modules/bootstrap/dist/css/bootstrap.css */"./node_modules/bootstrap/dist/css/bootstrap.css");
+__webpack_require__(/*! /home/jubin/Documents/Projects/rska/node_modules/font-awesome/css/font-awesome.css */"./node_modules/font-awesome/css/font-awesome.css");
+module.exports = __webpack_require__(/*! /home/jubin/Documents/Projects/rska/src/styles.scss */"./src/styles.scss");
 
 
 /***/ })
