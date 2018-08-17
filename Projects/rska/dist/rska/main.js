@@ -802,7 +802,7 @@ var FooterComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"section-title\">\n  <p class=\"section-title-text\">Place holder for Gallery</p>\n</div>\n"
+module.exports = "<div class=\"section-title\">\n  <p class=\"section-title-text\">Gallery</p>\n</div>\n"
 
 /***/ }),
 
@@ -827,7 +827,8 @@ module.exports = ""
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GalleryComponent", function() { return GalleryComponent; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _services_api_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./../../services/api.service */ "./src/app/services/api.service.ts");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -838,18 +839,25 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
 var GalleryComponent = /** @class */ (function () {
-    function GalleryComponent() {
+    function GalleryComponent(apiService) {
+        this.apiService = apiService;
     }
     GalleryComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.apiService.getAllAlbums().subscribe(function (res) {
+            _this.albums = res;
+            console.log(_this.albums);
+        });
     };
     GalleryComponent = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
             selector: 'app-gallery',
             template: __webpack_require__(/*! ./gallery.component.html */ "./src/app/components/gallery/gallery.component.html"),
             styles: [__webpack_require__(/*! ./gallery.component.scss */ "./src/app/components/gallery/gallery.component.scss")]
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [_services_api_service__WEBPACK_IMPORTED_MODULE_0__["ApiService"]])
     ], GalleryComponent);
     return GalleryComponent;
 }());
@@ -865,7 +873,7 @@ var GalleryComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"card manager-container\">\n    <div class=\"card-header\">\n        Gallery Manager\n    </div>\n    <div class=\"card-body\">\n\n    </div>\n</div>\n"
+module.exports = "<div class=\"card manager-container\">\n    <div class=\"card-header\">\n        Gallery Manager\n    </div>\n    <div class=\"card-body\">\n      <ul class=\"album-manager-list\">\n        <li *ngFor=\"let album of albums\">\n          <div class=\"album-manager-list-container\">\n          <div class=\"row\">\n            <div class=\"col-4\">\n              <a href=\"#\">\n                <img class = \"album-manager-cover\" src=\"../../../assets/images/album-cover.jpg\">\n              </a>\n            </div>\n            <div class=\"col-8\">\n              <p><b>{{album.name}}</b></p>\n              <p>{{album.description}}</p>\n              <button class=\"btn btn-primary btn-album-operation\">Modify</button>\n              <button class=\"btn btn-danger btn-album-operation\">Delete</button>\n            </div>\n          </div>\n        </div>\n        </li>\n      </ul>\n    </div>\n</div>\n"
 
 /***/ }),
 
@@ -890,7 +898,8 @@ module.exports = ""
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GallerymanagerComponent", function() { return GallerymanagerComponent; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _services_api_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./../../services/api.service */ "./src/app/services/api.service.ts");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -901,18 +910,24 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
 var GallerymanagerComponent = /** @class */ (function () {
-    function GallerymanagerComponent() {
+    function GallerymanagerComponent(apiService) {
+        this.apiService = apiService;
     }
     GallerymanagerComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.apiService.getAllAlbums().subscribe(function (res) {
+            _this.albums = res;
+        });
     };
     GallerymanagerComponent = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
             selector: 'app-gallerymanager',
             template: __webpack_require__(/*! ./gallerymanager.component.html */ "./src/app/components/gallerymanager/gallerymanager.component.html"),
             styles: [__webpack_require__(/*! ./gallerymanager.component.scss */ "./src/app/components/gallerymanager/gallerymanager.component.scss")]
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [_services_api_service__WEBPACK_IMPORTED_MODULE_0__["ApiService"]])
     ], GallerymanagerComponent);
     return GallerymanagerComponent;
 }());
@@ -1365,6 +1380,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ApiService", function() { return ApiService; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var rxjs_add_operator_map__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/add/operator/map */ "./node_modules/rxjs-compat/_esm5/add/operator/map.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1374,6 +1390,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 var httpOptions = {
@@ -1386,6 +1403,8 @@ var ApiService = /** @class */ (function () {
         this.http = http;
     }
     ApiService.prototype.getPublic = function (method) {
+        var url = publicURL + method;
+        return this.http.get(url, httpOptions);
     };
     ApiService.prototype.postPublic = function (body, method) {
         var url = publicURL + method;
@@ -1410,6 +1429,12 @@ var ApiService = /** @class */ (function () {
             'password': password
         };
         return this.postPublic(body, '/login');
+    };
+    ApiService.prototype.getAllAlbums = function () {
+        // this.getPublic('/getalbums').subscribe(res => {
+        //   console.log(res['albums']);
+        // });
+        return this.getPublic('/getalbums').map(function (res) { return res['albums']; });
     };
     ApiService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({

@@ -164,3 +164,25 @@
 .manager-container {
   width: 100%;
 }
+
+.album-manager-list-container {
+  width: 100%;
+  padding: 10px;
+  border: solid gray;
+  border-radius: 10px;
+  border-width: 1px;
+  border-color: gray;
+}
+
+.album-manager-cover {
+  width: 200px;
+  height: 150px;
+}
+
+.btn-album-operation {
+  margin-right: 20px;
+}
+
+.album-manager-list {
+  list-style: none;
+}

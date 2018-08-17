@@ -116,4 +116,18 @@ apiRoutes.route('/login').post((req, res, next) => {
   }
 });
 
+apiRoutes.route('/getalbums').get((req, res, next) => {
+  console.log('Get all albums');
+  var userResponse = responses.albums;
+  db.getAllAlbums((albums, status, errMsg) => {
+      if (status) {
+          userResponse.albums = albums;
+      } else {
+          userResponse.status = 400;
+          userResponse.error = errMsg;
+      }
+      res.send(userResponse);
+  });
+});
+
 module.exports = apiRoutes;

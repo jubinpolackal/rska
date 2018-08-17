@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { catchError, tap, map } from 'rxjs/operators';
+import 'rxjs/add/operator/map';
+import { Album } from '../model/album';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -19,7 +21,8 @@ export class ApiService {
   constructor(private http: HttpClient) { }
 
   private getPublic(method) {
-
+    const url = publicURL + method;
+    return this.http.get(url, httpOptions);
   }
 
   private postPublic(body, method): Observable<any> {
@@ -51,5 +54,13 @@ export class ApiService {
       'password': password
     };
     return this.postPublic(body, '/login');
+  }
+
+  public getAllAlbums() {
+    // this.getPublic('/getalbums').subscribe(res => {
+    //   console.log(res['albums']);
+
+    // });
+    return this.getPublic('/getalbums').map(res => res['albums'] as Album[]);
   }
 }

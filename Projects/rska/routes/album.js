@@ -11,32 +11,15 @@ var app = express();
 // Parsers
 app.use(bodyParser.urlencoded({
     extended: true
-  }));
+}));
+
 app.use(bodyParser.json());
 
-router.route('/new').post(function (req, res, body) {
-    console.log('Create new album');
-});
-
-router.route('/getall').get(function (req, res, body) {
-    console.log('Get all albums');
-    var userResponse = responses.albums;
-    db.getAllAlbums((albums, status, errMsg) => {
-        if (status) {
-            userResponse.albums = albums;
-        } else {
-            userResponse.status = 400;
-            userResponse.error = errMsg;
-        }
-        res.send(userResponse);
-    });
-});
-
 router.route('/delete').post(function (req, res, body) {
-  console.log('Delete album');
+  console.log('Deleting album');
   var userResponse = responses.albums;
 
-  db.deleteAlbum(id, (err, status) => {
+  db.deleteAlbum(req.body.id, (err, status) => {
     if (status) {
       res.sendStatus(200);
     } else {
@@ -46,9 +29,28 @@ router.route('/delete').post(function (req, res, body) {
 });
 
 router.route('/create').post(function (req, res, body) {
-  console.log('Delete album');
+  console.log('Create album');
   var userResponse = responses.album;
-  db.deleteAlbum(id, (album, err, status) => {
+  db.createAlbum(req.body.name, req.body.description, (album, err, status) => {
+    userResponse.error = err;
+    userResponse.err = err;
+    if (status) {
+      userResponse.album = album;
+      res.send(userResponse);
+    } else {
+      res.sendStatus(401);
+    }
+  });
+});
+
+router.route('/update').post(function (req, res, body) {
+  console.log('Update album');
+  var userResponse = responses.album;
+
+  db.updateAlbum(req.body.id, req.body.name, req.body.description, req.body.thumbnailId, (album, error, status)=>{
+    userResponse = responses.album;
+    userResponse.error = error;
+
     if (status) {
       userResponse.album = album;
       res.send(userResponse);

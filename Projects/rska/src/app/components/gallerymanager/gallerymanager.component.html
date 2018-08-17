@@ -3,6 +3,24 @@
         Gallery Manager
     </div>
     <div class="card-body">
-
+      <ul class="album-manager-list">
+        <li *ngFor="let album of albums">
+          <div class="album-manager-list-container">
+          <div class="row">
+            <div class="col-4">
+              <a href="#">
+                <img class = "album-manager-cover" src="../../../assets/images/album-cover.jpg">
+              </a>
+            </div>
+            <div class="col-8">
+              <p><b>{{album.name}}</b></p>
+              <p>{{album.description}}</p>
+              <button class="btn btn-primary btn-album-operation">Modify</button>
+              <button class="btn btn-danger btn-album-operation">Delete</button>
+            </div>
+          </div>
+        </div>
+        </li>
+      </ul>
     </div>
 </div>
