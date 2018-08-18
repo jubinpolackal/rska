@@ -1,22 +1,7 @@
 
 const sqlite3 = require('sqlite3').verbose();
 
-let database = new sqlite3.Database('./assets/database/rska.sqlite',
-sqlite3.OPEN_READWRITE,
-(err) => {
-  if (err) {
-    console.log('Unable to opne database ...');
-    console.log(err.message);
-  } else {
-    console.log('Database opened successfully ...');
-  }
-});
-
 var db = {
-
-  closeDB: function() {
-    database.close();
-  },
 /* Login method */
   adminLogin: function(userName, password, callback) {
     var localdb = new sqlite3.Database('./assets/database/rska.sqlite', sqlite3.OPEN_READONLY);
@@ -120,8 +105,9 @@ var db = {
         console.log('Fetch albums successful ...');
         callBack(rows, true, err);
       }
-      localdb.close();
+
     });
+    localdb.close();
   }
 };
 

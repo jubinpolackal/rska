@@ -1,16 +1,12 @@
+import { Album } from './../model/album';
 import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { catchError, tap, map } from 'rxjs/operators';
 import 'rxjs/add/operator/map';
-import { Album } from '../model/album';
-
-const httpOptions = {
-  headers: new HttpHeaders({'Content-Type': 'application/json'})
-};
+import { UtilityService } from './utility.service';
 
 const publicURL = '/public';
-const protectedURL = '/protected';
 
 @Injectable({
   providedIn: 'root'
@@ -18,14 +14,21 @@ const protectedURL = '/protected';
 export class ApiService {
 
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+              private utilityService: UtilityService) { }
 
   private getPublic(method) {
+    const httpOptions = {
+      headers: new HttpHeaders({'Content-Type': 'application/json'})
+    };
     const url = publicURL + method;
     return this.http.get(url, httpOptions);
   }
 
   private postPublic(body, method): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({'Content-Type': 'application/json'})
+    };
     const url = publicURL + method;
     return this.http.post(url, body, httpOptions);
   }
@@ -35,7 +38,13 @@ export class ApiService {
   }
 
   private postProtected(body, method) {
-
+    const url = method;
+    const token = this.utilityService.getToken();
+    const httpOptions = {
+      headers: new HttpHeaders({'Content-Type': 'application/json',
+                                'Authorization': token}),
+    };
+    return this.http.post(url, body, httpOptions);
   }
 
   public postContactUs(name, phone, email, message) {
@@ -57,10 +66,16 @@ export class ApiService {
   }
 
   public getAllAlbums() {
-    // this.getPublic('/getalbums').subscribe(res => {
-    //   console.log(res['albums']);
-
-    // });
     return this.getPublic('/getalbums').map(res => res['albums'] as Album[]);
+  }
+
+  public updateAlbum(album) {
+    const body = JSON.stringify(album);
+    return this.postProtected(body, '/album/update');
+  }
+
+  public deleteAlbum(id) {
+    const body = {'id': id};
+    return this.postProtected(body, '/album/delete');
   }
 }

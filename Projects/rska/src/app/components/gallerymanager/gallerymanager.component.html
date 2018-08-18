@@ -4,7 +4,7 @@
     </div>
     <div class="card-body">
       <ul class="album-manager-list">
-        <li *ngFor="let album of albums">
+        <li *ngFor="let album of albums; let i=index">
           <div class="album-manager-list-container">
           <div class="row">
             <div class="col-4">
@@ -13,10 +13,17 @@
               </a>
             </div>
             <div class="col-8">
-              <p><b>{{album.name}}</b></p>
-              <p>{{album.description}}</p>
-              <button class="btn btn-primary btn-album-operation">Modify</button>
-              <button class="btn btn-danger btn-album-operation">Delete</button>
+              <div *ngIf="!album.isEditing">
+                <p><b>{{album.name}}</b></p>
+                <p>{{album.description}}</p>
+              </div>
+              <div *ngIf="album.isEditing">
+                <input type="text">
+                <textarea name="albumDescription"></textarea>
+                <button class="btn btn-primary" (click)="onEditAlbum($event, title, descriptionText, i)">OK</button>
+              </div>
+              <button class="btn btn-primary btn-album-operation" (click)="onModifyAlbum($event, i)">Modify</button>
+              <button class="btn btn-danger btn-album-operation" (click)="onDeleteAlbum($event, i)">Delete</button>
             </div>
           </div>
         </div>

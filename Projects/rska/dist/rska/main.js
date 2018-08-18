@@ -873,7 +873,7 @@ var GalleryComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"card manager-container\">\n    <div class=\"card-header\">\n        Gallery Manager\n    </div>\n    <div class=\"card-body\">\n      <ul class=\"album-manager-list\">\n        <li *ngFor=\"let album of albums\">\n          <div class=\"album-manager-list-container\">\n          <div class=\"row\">\n            <div class=\"col-4\">\n              <a href=\"#\">\n                <img class = \"album-manager-cover\" src=\"../../../assets/images/album-cover.jpg\">\n              </a>\n            </div>\n            <div class=\"col-8\">\n              <p><b>{{album.name}}</b></p>\n              <p>{{album.description}}</p>\n              <button class=\"btn btn-primary btn-album-operation\">Modify</button>\n              <button class=\"btn btn-danger btn-album-operation\">Delete</button>\n            </div>\n          </div>\n        </div>\n        </li>\n      </ul>\n    </div>\n</div>\n"
+module.exports = "<div class=\"card manager-container\">\n    <div class=\"card-header\">\n        Gallery Manager\n    </div>\n    <div class=\"card-body\">\n      <ul class=\"album-manager-list\">\n        <li *ngFor=\"let album of albums; let i=index\">\n          <div class=\"album-manager-list-container\">\n          <div class=\"row\">\n            <div class=\"col-4\">\n              <a href=\"#\">\n                <img class = \"album-manager-cover\" src=\"../../../assets/images/album-cover.jpg\">\n              </a>\n            </div>\n            <div class=\"col-8\">\n              <div *ngIf=\"!album.isEditing\">\n                <p><b>{{album.name}}</b></p>\n                <p>{{album.description}}</p>\n              </div>\n              <div *ngIf=\"album.isEditing\">\n                <input type=\"text\">\n                <textarea name=\"albumDescription\"></textarea>\n                <button class=\"btn btn-primary\" (click)=\"onEditAlbum($event, title, descriptionText, i)\">OK</button>\n              </div>\n              <button class=\"btn btn-primary btn-album-operation\" (click)=\"onModifyAlbum($event, i)\">Modify</button>\n              <button class=\"btn btn-danger btn-album-operation\" (click)=\"onDeleteAlbum($event, i)\">Delete</button>\n            </div>\n          </div>\n        </div>\n        </li>\n      </ul>\n    </div>\n</div>\n"
 
 /***/ }),
 
@@ -900,6 +900,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GallerymanagerComponent", function() { return GallerymanagerComponent; });
 /* harmony import */ var _services_api_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./../../services/api.service */ "./src/app/services/api.service.ts");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _model_album__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../model/album */ "./src/app/model/album.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -911,6 +912,7 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 };
 
 
+
 var GallerymanagerComponent = /** @class */ (function () {
     function GallerymanagerComponent(apiService) {
         this.apiService = apiService;
@@ -919,6 +921,34 @@ var GallerymanagerComponent = /** @class */ (function () {
         var _this = this;
         this.apiService.getAllAlbums().subscribe(function (res) {
             _this.albums = res;
+        });
+    };
+    GallerymanagerComponent.prototype.onModifyAlbum = function ($event, index) {
+        $event.stopPropagation();
+        var album = this.albums[index];
+        album.isEditing = true;
+        console.log('Modifying album' + album.name);
+    };
+    GallerymanagerComponent.prototype.onDeleteAlbum = function ($event, index) {
+        $event.stopPropagation();
+        var album = this.albums[index];
+        console.log('Deleting album' + album.name);
+    };
+    GallerymanagerComponent.prototype.onEditAlbum = function ($event, title, descriptionText, index) {
+        var _this = this;
+        var album = this.albums[index];
+        this.apiService.updateAlbum(album).subscribe(function (resp) {
+            if (resp['status'] && resp['status'] === 200) {
+                console.log(resp);
+                console.log(resp['status']);
+                console.log(resp['album']);
+                var modifiedAlbumObj = resp['album'];
+                var modifiedAlbum = new _model_album__WEBPACK_IMPORTED_MODULE_2__["Album"](modifiedAlbumObj['id'], modifiedAlbumObj['name'], modifiedAlbumObj['description'], modifiedAlbumObj['thumbnailId']);
+                _this.albums[index] = modifiedAlbum;
+            }
+            else {
+                console.log('Update album error');
+            }
         });
     };
     GallerymanagerComponent = __decorate([
@@ -1368,6 +1398,31 @@ var NewsflashmanagerComponent = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/model/album.ts":
+/*!********************************!*\
+  !*** ./src/app/model/album.ts ***!
+  \********************************/
+/*! exports provided: Album */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Album", function() { return Album; });
+var Album = /** @class */ (function () {
+    function Album(id, name, description, thumbnailId) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.thumbnailid = thumbnailId;
+        this.isEditing = false;
+    }
+    return Album;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/services/api.service.ts":
 /*!*****************************************!*\
   !*** ./src/app/services/api.service.ts ***!
@@ -1381,6 +1436,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
 /* harmony import */ var rxjs_add_operator_map__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/add/operator/map */ "./node_modules/rxjs-compat/_esm5/add/operator/map.js");
+/* harmony import */ var _utility_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./utility.service */ "./src/app/services/utility.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1393,26 +1449,37 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
-var httpOptions = {
-    headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({ 'Content-Type': 'application/json' })
-};
+
 var publicURL = '/public';
-var protectedURL = '/protected';
 var ApiService = /** @class */ (function () {
-    function ApiService(http) {
+    function ApiService(http, utilityService) {
         this.http = http;
+        this.utilityService = utilityService;
     }
     ApiService.prototype.getPublic = function (method) {
+        var httpOptions = {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({ 'Content-Type': 'application/json' })
+        };
         var url = publicURL + method;
         return this.http.get(url, httpOptions);
     };
     ApiService.prototype.postPublic = function (body, method) {
+        var httpOptions = {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({ 'Content-Type': 'application/json' })
+        };
         var url = publicURL + method;
         return this.http.post(url, body, httpOptions);
     };
     ApiService.prototype.getProtected = function (body, method) {
     };
     ApiService.prototype.postProtected = function (body, method) {
+        var url = method;
+        var token = this.utilityService.getToken();
+        var httpOptions = {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({ 'Content-Type': 'application/json',
+                'Authorization': token }),
+        };
+        return this.http.post(url, body, httpOptions);
     };
     ApiService.prototype.postContactUs = function (name, phone, email, message) {
         var body = {
@@ -1431,16 +1498,22 @@ var ApiService = /** @class */ (function () {
         return this.postPublic(body, '/login');
     };
     ApiService.prototype.getAllAlbums = function () {
-        // this.getPublic('/getalbums').subscribe(res => {
-        //   console.log(res['albums']);
-        // });
         return this.getPublic('/getalbums').map(function (res) { return res['albums']; });
+    };
+    ApiService.prototype.updateAlbum = function (album) {
+        var body = JSON.stringify(album);
+        return this.postProtected(body, '/album/update');
+    };
+    ApiService.prototype.deleteAlbum = function (id) {
+        var body = { 'id': id };
+        return this.postProtected(body, '/album/delete');
     };
     ApiService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
             providedIn: 'root'
         }),
-        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
+        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"],
+            _utility_service__WEBPACK_IMPORTED_MODULE_3__["UtilityService"]])
     ], ApiService);
     return ApiService;
 }());
