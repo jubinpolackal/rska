@@ -71,11 +71,23 @@ export class ApiService {
 
   public updateAlbum(album) {
     const body = JSON.stringify(album);
+    console.log('Update body content ...');
+    console.log(body);
     return this.postProtected(body, '/album/update');
   }
 
   public deleteAlbum(id) {
     const body = {'id': id};
     return this.postProtected(body, '/album/delete');
+  }
+
+  public createAlbum(album) {
+    const body = {
+      'name': album.name,
+      'description': album.description
+    };
+    console.log('body ...');
+    console.log(body);
+    return this.postProtected(body, '/album/create');
   }
 }

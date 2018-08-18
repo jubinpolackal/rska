@@ -1,6 +1,10 @@
 <div class="card manager-container">
     <div class="card-header">
-        Gallery Manager
+        <div>
+          <span>Gallery Manager</span>
+          <span class="album-add-btn"><button class="btn btn-primary"
+                (click)="addNewAlbum($event)">New</button></span>
+        </div>
     </div>
     <div class="card-body">
       <ul class="album-manager-list">
@@ -16,14 +20,31 @@
               <div *ngIf="!album.isEditing">
                 <p><b>{{album.name}}</b></p>
                 <p>{{album.description}}</p>
+                <br>
+                <button class="btn btn-primary btn-album-operation"
+                        (click)="onModifyAlbum($event, i)">Modify</button>
+
+                <button class="btn btn-primary btn-album-operation"
+                        (click)="onViewAlbum($event, i)">View</button>
+
+                <button class="btn btn-danger btn-album-operation"
+                        (click)="onDeleteAlbum($event, i)">Delete</button>
               </div>
               <div *ngIf="album.isEditing">
-                <input type="text">
-                <textarea name="albumDescription"></textarea>
-                <button class="btn btn-primary" (click)="onEditAlbum($event, title, descriptionText, i)">OK</button>
+                <input type="text"
+                       [(ngModel)]="modifiedAlbumName"
+                       class="form-control"
+                       placeholder="Album Name">
+                <textarea name="albumDescription"
+                          [(ngModel)]="modifiedAlbumDescription"
+                          class="form-control"
+                          placeholder="Descriiption"></textarea>
+                <button class="btn btn-primary btn-album-operation"
+                        (click)="onEditAlbum($event, i)">OK</button>
+                <button class="btn btn-default btn-album-operation"
+                        (click)="onCancel($event, i)">Cancel</button>
               </div>
-              <button class="btn btn-primary btn-album-operation" (click)="onModifyAlbum($event, i)">Modify</button>
-              <button class="btn btn-danger btn-album-operation" (click)="onDeleteAlbum($event, i)">Delete</button>
+
             </div>
           </div>
         </div>

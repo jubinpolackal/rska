@@ -46,8 +46,8 @@ router.route('/create').post(function (req, res, body) {
 router.route('/update').post(function (req, res, body) {
   console.log('Update album');
   var userResponse = responses.album;
-
-  db.updateAlbum(req.body.id, req.body.name, req.body.description, req.body.thumbnailId, (album, error, status)=>{
+  console.log(req.body);
+  db.updateAlbum(req.body.id, req.body.name, req.body.description, req.body.thumbnailid, (album, error, status)=>{
     userResponse = responses.album;
     userResponse.error = error;
 

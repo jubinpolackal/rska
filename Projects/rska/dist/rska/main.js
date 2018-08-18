@@ -117,6 +117,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_classmanager_classmanager_component__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./components/classmanager/classmanager.component */ "./src/app/components/classmanager/classmanager.component.ts");
 /* harmony import */ var _components_instructorsmanager_instructorsmanager_component__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./components/instructorsmanager/instructorsmanager.component */ "./src/app/components/instructorsmanager/instructorsmanager.component.ts");
 /* harmony import */ var _components_copyrightmanager_copyrightmanager_component__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./components/copyrightmanager/copyrightmanager.component */ "./src/app/components/copyrightmanager/copyrightmanager.component.ts");
+/* harmony import */ var _components_albummanager_albummanager_component__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./components/albummanager/albummanager.component */ "./src/app/components/albummanager/albummanager.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -129,6 +130,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 //import { AppRoutingModule } from './app-routing.module';
+
 
 
 
@@ -163,7 +165,8 @@ var appRoutes = [
             { path: 'locationmanager', component: _components_locationmanager_locationmanager_component__WEBPACK_IMPORTED_MODULE_22__["LocationmanagerComponent"] },
             { path: 'classmanager', component: _components_classmanager_classmanager_component__WEBPACK_IMPORTED_MODULE_23__["ClassmanagerComponent"] },
             { path: 'instructorsmanager', component: _components_instructorsmanager_instructorsmanager_component__WEBPACK_IMPORTED_MODULE_24__["InstructorsmanagerComponent"] },
-            { path: 'copyrightmanager', component: _components_copyrightmanager_copyrightmanager_component__WEBPACK_IMPORTED_MODULE_25__["CopyrightmanagerComponent"] }
+            { path: 'copyrightmanager', component: _components_copyrightmanager_copyrightmanager_component__WEBPACK_IMPORTED_MODULE_25__["CopyrightmanagerComponent"] },
+            { path: 'albummanager', component: _components_albummanager_albummanager_component__WEBPACK_IMPORTED_MODULE_26__["AlbummanagerComponent"] }
         ]
     }
 ];
@@ -189,7 +192,8 @@ var AppModule = /** @class */ (function () {
                 _components_locationmanager_locationmanager_component__WEBPACK_IMPORTED_MODULE_22__["LocationmanagerComponent"],
                 _components_classmanager_classmanager_component__WEBPACK_IMPORTED_MODULE_23__["ClassmanagerComponent"],
                 _components_instructorsmanager_instructorsmanager_component__WEBPACK_IMPORTED_MODULE_24__["InstructorsmanagerComponent"],
-                _components_copyrightmanager_copyrightmanager_component__WEBPACK_IMPORTED_MODULE_25__["CopyrightmanagerComponent"]
+                _components_copyrightmanager_copyrightmanager_component__WEBPACK_IMPORTED_MODULE_25__["CopyrightmanagerComponent"],
+                _components_albummanager_albummanager_component__WEBPACK_IMPORTED_MODULE_26__["AlbummanagerComponent"]
             ],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
@@ -345,6 +349,69 @@ var AdminComponent = /** @class */ (function () {
         __metadata("design:paramtypes", [])
     ], AdminComponent);
     return AdminComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/components/albummanager/albummanager.component.html":
+/*!*********************************************************************!*\
+  !*** ./src/app/components/albummanager/albummanager.component.html ***!
+  \*********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"card manager-container\">\n  <div class=\"card-header\">\n      Album Manager\n  </div>\n  <div class=\"card-body\">\n\n  </div>\n</div>\n"
+
+/***/ }),
+
+/***/ "./src/app/components/albummanager/albummanager.component.scss":
+/*!*********************************************************************!*\
+  !*** ./src/app/components/albummanager/albummanager.component.scss ***!
+  \*********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/components/albummanager/albummanager.component.ts":
+/*!*******************************************************************!*\
+  !*** ./src/app/components/albummanager/albummanager.component.ts ***!
+  \*******************************************************************/
+/*! exports provided: AlbummanagerComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AlbummanagerComponent", function() { return AlbummanagerComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var AlbummanagerComponent = /** @class */ (function () {
+    function AlbummanagerComponent() {
+    }
+    AlbummanagerComponent.prototype.ngOnInit = function () {
+    };
+    AlbummanagerComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-albummanager',
+            template: __webpack_require__(/*! ./albummanager.component.html */ "./src/app/components/albummanager/albummanager.component.html"),
+            styles: [__webpack_require__(/*! ./albummanager.component.scss */ "./src/app/components/albummanager/albummanager.component.scss")]
+        }),
+        __metadata("design:paramtypes", [])
+    ], AlbummanagerComponent);
+    return AlbummanagerComponent;
 }());
 
 
@@ -873,7 +940,7 @@ var GalleryComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"card manager-container\">\n    <div class=\"card-header\">\n        Gallery Manager\n    </div>\n    <div class=\"card-body\">\n      <ul class=\"album-manager-list\">\n        <li *ngFor=\"let album of albums; let i=index\">\n          <div class=\"album-manager-list-container\">\n          <div class=\"row\">\n            <div class=\"col-4\">\n              <a href=\"#\">\n                <img class = \"album-manager-cover\" src=\"../../../assets/images/album-cover.jpg\">\n              </a>\n            </div>\n            <div class=\"col-8\">\n              <div *ngIf=\"!album.isEditing\">\n                <p><b>{{album.name}}</b></p>\n                <p>{{album.description}}</p>\n              </div>\n              <div *ngIf=\"album.isEditing\">\n                <input type=\"text\">\n                <textarea name=\"albumDescription\"></textarea>\n                <button class=\"btn btn-primary\" (click)=\"onEditAlbum($event, title, descriptionText, i)\">OK</button>\n              </div>\n              <button class=\"btn btn-primary btn-album-operation\" (click)=\"onModifyAlbum($event, i)\">Modify</button>\n              <button class=\"btn btn-danger btn-album-operation\" (click)=\"onDeleteAlbum($event, i)\">Delete</button>\n            </div>\n          </div>\n        </div>\n        </li>\n      </ul>\n    </div>\n</div>\n"
+module.exports = "<div class=\"card manager-container\">\n    <div class=\"card-header\">\n        <div>\n          <span>Gallery Manager</span>\n          <span class=\"album-add-btn\"><button class=\"btn btn-primary\"\n                (click)=\"addNewAlbum($event)\">New</button></span>\n        </div>\n    </div>\n    <div class=\"card-body\">\n      <ul class=\"album-manager-list\">\n        <li *ngFor=\"let album of albums; let i=index\">\n          <div class=\"album-manager-list-container\">\n          <div class=\"row\">\n            <div class=\"col-4\">\n              <a href=\"#\">\n                <img class = \"album-manager-cover\" src=\"../../../assets/images/album-cover.jpg\">\n              </a>\n            </div>\n            <div class=\"col-8\">\n              <div *ngIf=\"!album.isEditing\">\n                <p><b>{{album.name}}</b></p>\n                <p>{{album.description}}</p>\n                <br>\n                <button class=\"btn btn-primary btn-album-operation\"\n                        (click)=\"onModifyAlbum($event, i)\">Modify</button>\n\n                <button class=\"btn btn-primary btn-album-operation\"\n                        (click)=\"onViewAlbum($event, i)\">View</button>\n\n                <button class=\"btn btn-danger btn-album-operation\"\n                        (click)=\"onDeleteAlbum($event, i)\">Delete</button>\n              </div>\n              <div *ngIf=\"album.isEditing\">\n                <input type=\"text\"\n                       [(ngModel)]=\"modifiedAlbumName\"\n                       class=\"form-control\"\n                       placeholder=\"Album Name\">\n                <textarea name=\"albumDescription\"\n                          [(ngModel)]=\"modifiedAlbumDescription\"\n                          class=\"form-control\"\n                          placeholder=\"Descriiption\"></textarea>\n                <button class=\"btn btn-primary btn-album-operation\"\n                        (click)=\"onEditAlbum($event, i)\">OK</button>\n                <button class=\"btn btn-default btn-album-operation\"\n                        (click)=\"onCancel($event, i)\">Cancel</button>\n              </div>\n\n            </div>\n          </div>\n        </div>\n        </li>\n      </ul>\n    </div>\n</div>\n"
 
 /***/ }),
 
@@ -898,9 +965,10 @@ module.exports = ""
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GallerymanagerComponent", function() { return GallerymanagerComponent; });
-/* harmony import */ var _services_api_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./../../services/api.service */ "./src/app/services/api.service.ts");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _model_album__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../model/album */ "./src/app/model/album.ts");
+/* harmony import */ var _model_album__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./../../model/album */ "./src/app/model/album.ts");
+/* harmony import */ var _services_api_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../../services/api.service */ "./src/app/services/api.service.ts");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -913,51 +981,91 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var GallerymanagerComponent = /** @class */ (function () {
-    function GallerymanagerComponent(apiService) {
+    function GallerymanagerComponent(apiService, router) {
         this.apiService = apiService;
+        this.router = router;
     }
     GallerymanagerComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.apiService.getAllAlbums().subscribe(function (res) {
             _this.albums = res;
+            console.log(_this.albums);
         });
     };
     GallerymanagerComponent.prototype.onModifyAlbum = function ($event, index) {
         $event.stopPropagation();
         var album = this.albums[index];
         album.isEditing = true;
+        this.selectedAlbum = album;
+        this.modifiedAlbumName = album.name;
+        this.modifiedAlbumDescription = album.description;
         console.log('Modifying album' + album.name);
     };
     GallerymanagerComponent.prototype.onDeleteAlbum = function ($event, index) {
         $event.stopPropagation();
         var album = this.albums[index];
         console.log('Deleting album' + album.name);
-    };
-    GallerymanagerComponent.prototype.onEditAlbum = function ($event, title, descriptionText, index) {
-        var _this = this;
-        var album = this.albums[index];
-        this.apiService.updateAlbum(album).subscribe(function (resp) {
+        this.apiService.deleteAlbum(album.id).subscribe(function (resp) {
+            console.log(resp);
             if (resp['status'] && resp['status'] === 200) {
-                console.log(resp);
-                console.log(resp['status']);
-                console.log(resp['album']);
-                var modifiedAlbumObj = resp['album'];
-                var modifiedAlbum = new _model_album__WEBPACK_IMPORTED_MODULE_2__["Album"](modifiedAlbumObj['id'], modifiedAlbumObj['name'], modifiedAlbumObj['description'], modifiedAlbumObj['thumbnailId']);
-                _this.albums[index] = modifiedAlbum;
+                console.log('Deleted album successfully');
             }
             else {
-                console.log('Update album error');
+                console.log('Error deleting album');
             }
         });
     };
+    GallerymanagerComponent.prototype.onEditAlbum = function ($event, index) {
+        var _this = this;
+        $event.stopPropagation();
+        var album = this.albums[index];
+        album.name = this.modifiedAlbumName;
+        album.description = this.modifiedAlbumDescription;
+        if (album.id !== -1) {
+            console.log('Going to edit ...');
+            this.apiService.updateAlbum(this.selectedAlbum).subscribe(function (resp) {
+                if (resp['status'] && resp['status'] === 200) {
+                    console.log(resp);
+                    console.log(resp['status']);
+                    console.log(resp['album']);
+                    var modifiedAlbumObj = resp['album'];
+                    var modifiedAlbum = new _model_album__WEBPACK_IMPORTED_MODULE_0__["Album"](modifiedAlbumObj['id'], modifiedAlbumObj['name'], modifiedAlbumObj['description'], modifiedAlbumObj['thumbnailId']);
+                    _this.albums[index] = modifiedAlbum;
+                }
+                else {
+                    console.log('Update album error');
+                }
+            });
+        }
+        else {
+            console.log('Creating new album ...');
+        }
+    };
+    GallerymanagerComponent.prototype.onCancel = function ($event, index) {
+        $event.stopPropagation();
+        var album = this.albums[index];
+        album.isEditing = false;
+    };
+    GallerymanagerComponent.prototype.onViewAlbum = function ($event, i) {
+        $event.stopPropagation();
+        this.router.navigate(['albummanager']);
+    };
+    GallerymanagerComponent.prototype.addNewAlbum = function ($event) {
+        $event.stopPropagation();
+        var album = new _model_album__WEBPACK_IMPORTED_MODULE_0__["Album"](-1, '', '', -1);
+        album.isEditing = true;
+        this.albums.splice(0, 0, album);
+    };
     GallerymanagerComponent = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["Component"])({
             selector: 'app-gallerymanager',
             template: __webpack_require__(/*! ./gallerymanager.component.html */ "./src/app/components/gallerymanager/gallerymanager.component.html"),
             styles: [__webpack_require__(/*! ./gallerymanager.component.scss */ "./src/app/components/gallerymanager/gallerymanager.component.scss")]
         }),
-        __metadata("design:paramtypes", [_services_api_service__WEBPACK_IMPORTED_MODULE_0__["ApiService"]])
+        __metadata("design:paramtypes", [_services_api_service__WEBPACK_IMPORTED_MODULE_1__["ApiService"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"]])
     ], GallerymanagerComponent);
     return GallerymanagerComponent;
 }());
@@ -1502,11 +1610,20 @@ var ApiService = /** @class */ (function () {
     };
     ApiService.prototype.updateAlbum = function (album) {
         var body = JSON.stringify(album);
+        console.log('Update body content ...');
+        console.log(body);
         return this.postProtected(body, '/album/update');
     };
     ApiService.prototype.deleteAlbum = function (id) {
         var body = { 'id': id };
         return this.postProtected(body, '/album/delete');
+    };
+    ApiService.prototype.createAlbum = function (album) {
+        var body = {
+            'name': album.name,
+            'description': album.description
+        };
+        return this.postProtected(body, '/album/create');
     };
     ApiService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({

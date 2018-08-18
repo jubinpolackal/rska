@@ -25,6 +25,7 @@ import { LocationmanagerComponent } from './components/locationmanager/locationm
 import { ClassmanagerComponent } from './components/classmanager/classmanager.component';
 import { InstructorsmanagerComponent } from './components/instructorsmanager/instructorsmanager.component';
 import { CopyrightmanagerComponent } from './components/copyrightmanager/copyrightmanager.component';
+import { AlbummanagerComponent } from './components/albummanager/albummanager.component';
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -39,7 +40,8 @@ const appRoutes: Routes = [
       {path: 'locationmanager', component: LocationmanagerComponent },
       {path: 'classmanager', component: ClassmanagerComponent },
       {path: 'instructorsmanager', component: InstructorsmanagerComponent },
-      {path: 'copyrightmanager', component: CopyrightmanagerComponent }
+      {path: 'copyrightmanager', component: CopyrightmanagerComponent },
+      {path: 'albummanager', component: AlbummanagerComponent }
     ]
   }
 ];
@@ -62,7 +64,8 @@ const appRoutes: Routes = [
     LocationmanagerComponent,
     ClassmanagerComponent,
     InstructorsmanagerComponent,
-    CopyrightmanagerComponent
+    CopyrightmanagerComponent,
+    AlbummanagerComponent
   ],
   imports: [
     BrowserModule,

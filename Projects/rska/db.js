@@ -59,7 +59,8 @@ var db = {
     var localdb = new sqlite3.Database('./assets/database/rska.sqlite', sqlite3.OPEN_READWRITE);
     let sql = 'UPDATE album SET name=?, description=?, thumbnailid=? WHERE id=?';
     let data = [albumName, description, thumbnailId, albumId];
-
+    console.log('Data ...');
+    console.log(data);
     localdb.run(sql, data, (err) => {
       if (err) {
         callBack({}, 'Error updating album. Contact IT support.', false);
