@@ -1,7 +1,7 @@
-<div class="card manager-container">
+<div class="card manager-container" *ngIf="!isPhotoManagerActive">
     <div class="card-header">
         <div>
-          <span>Gallery Manager</span>
+          <span>Album Manager</span>
           <span class="album-add-btn"><button class="btn btn-primary"
                 (click)="addNewAlbum($event)">New</button></span>
         </div>
@@ -12,7 +12,7 @@
           <div class="album-manager-list-container">
           <div class="row">
             <div class="col-4">
-              <a href="#">
+              <a class="btn" (click)="onViewAlbum($event, i)">
                 <img class = "album-manager-cover" src="../../../assets/images/album-cover.jpg">
               </a>
             </div>
@@ -51,4 +51,29 @@
         </li>
       </ul>
     </div>
+</div>
+<div class="card manager-container" *ngIf="isPhotoManagerActive">
+  <div class="card-header">
+    <div>
+      <span>Photo Manager</span>
+      <span class="album-add-btn">
+        <button class="btn btn-primary album-add-btn"
+            (click)="addNewPhoto($event)">
+            New
+        </button>
+        <button class="btn btn-danger album-add-btn"
+        (click)="backToAlbumManager()">
+          Close
+        </button>
+      </span>
+    </div>
+    <div>
+      <p class="photo-title-text">{{ selectedAlbum.name }}</p>
+    </div>
+  </div>
+  <div class="card-body">
+      <input type="file"
+             accept="image/*"
+             (change)="selectImageListener($event)">
+  </div>
 </div>

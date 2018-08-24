@@ -36,8 +36,6 @@ var db = {
         console.log('Creating album  failed ...');
       } else {
         console.log('Created album ...');
-        console.log(row);
-        console.log(`A row has been inserted with rowid ${this.lastID}`);
         let stmt = 'SELECT * FROM album WHERE name=? AND description=? AND thumbnailid=?';
         let stmtData= [albumName, description, -1];
         localdb.get(stmt, stmtData, (err, row)=>{
@@ -109,7 +107,45 @@ var db = {
 
     });
     localdb.close();
+  },
+
+  //Upload photo
+  savePhoto(photoURL, albumId, callBack) {
+    var localdb = new sqlite3.Database('./assets/database/rska.sqlite', sqlite3.OPEN_READONLY);
+
+    let sql = 'INSERT INTO photo (photourl, photoalbum) VALUES (?,?)';
+    let dataValue = [photoURL, albumId];
+    console.log('Going to insert photo record in table...');
+    localdb.run(sql, dataValue, (row, err) => {
+      console.log(err);
+      if (err) {
+        console.log(err);
+        callBack({}, 'Error uploading photo. Contact IT support.', false);
+      } else {
+        console.log('Upload successful...');
+        console.log(row);
+        callBack(row, 'Photo uploaded successfully.', true);
+      }
+    });
+
+    localdb.close();
+  },
+
+  getPhotos(albumId, callBack) {
+    var localdb = new sqlite3.Database('./assets/database/rska.sqlite', sqlite3.OPEN_READONLY);
+    let sql = 'SELECT * FROM photo WHERE photoalbum=?';
+    localdb.all(sql, albumId, (err, rows)=>{
+      if (err) {
+        callback([], false, 'Error fetching photos. Contact IT support.');
+        console.log('Get photos failed ...');
+      } else {
+        console.log('Fetch photos successful ...');
+        callBack(rows, true, err);
+      }
+
+    });
+    localdb.close();
   }
-};
+}
 
 module.exports = db;

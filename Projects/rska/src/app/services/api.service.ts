@@ -17,6 +17,7 @@ export class ApiService {
   constructor(private http: HttpClient,
               private utilityService: UtilityService) { }
 
+  /* Unprotected public api */
   private getPublic(method) {
     const httpOptions = {
       headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -33,6 +34,7 @@ export class ApiService {
     return this.http.post(url, body, httpOptions);
   }
 
+  /* API's protected with web token */
   private getProtected(body, method) {
 
   }
@@ -81,7 +83,8 @@ export class ApiService {
     return this.postProtected(body, '/album/delete');
   }
 
-  public createAlbum(album) {
+  public createAlbum(album: Album) {
+    console.log(album);
     const body = {
       'name': album.name,
       'description': album.description
@@ -89,5 +92,14 @@ export class ApiService {
     console.log('body ...');
     console.log(body);
     return this.postProtected(body, '/album/create');
+  }
+
+  public uploadPhoto(albumId, fileName, fileData) {
+    const body = {
+      imagedata: fileData,
+      filename: fileName,
+      albumid: albumId
+    };
+    return this.postProtected(body, '/album/upload');
   }
 }

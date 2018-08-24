@@ -11,18 +11,22 @@ var publicRoutes = require('./routes/routes-public');
 const app = express();
 
 // Parsers
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
+// app.use(bodyParser.urlencoded({
+//   json: {limit: '50mb', extended: true},
+//   urlencoded: {limit: '50mb', extended: true},
+//   extended: true
+// }));
+app.use(bodyParser.json({limit: '25mb', extended: true}));
+app.use(bodyParser.urlencoded({limit: '25mb', extended: true}));
 app.use(bodyParser.json());
 
 // Angular DIST output folder
 app.use(express.static(path.join(__dirname, 'dist/rska')));
 
 function verifyToken(req,res,next) {
-  var token = req.body.token || 
-              req.query.token || 
-              req.headers['x-access-token'] || 
+  var token = req.body.token ||
+              req.query.token ||
+              req.headers['x-access-token'] ||
               req.headers['authorization'];
     if (token) {
     // verifies secret and checks exp
@@ -32,7 +36,7 @@ function verifyToken(req,res,next) {
                 return res.status(403).send({
                     "error": true
                 });
-            } 
+            }
             console.log('Token validation success ...');
             console.log(decoded);
             req.decoded = decoded;

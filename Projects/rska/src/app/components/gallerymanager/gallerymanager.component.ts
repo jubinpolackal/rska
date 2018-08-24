@@ -2,6 +2,7 @@ import { Album } from './../../model/album';
 import { ApiService } from './../../services/api.service';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Photo } from '../../model/photo';
 
 @Component({
   selector: 'app-gallerymanager',
@@ -11,11 +12,14 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class GallerymanagerComponent implements OnInit {
 
   albums: Album[];
+  photos: Photo[];
   albumName: string;
   albumDescription: string;
   selectedAlbum: Album;
   modifiedAlbumName: string;
   modifiedAlbumDescription: string;
+  isPhotoManagerActive: boolean;
+  uploadImage: any;
 
   constructor(private apiService: ApiService,
               private router: Router) { }
@@ -23,6 +27,7 @@ export class GallerymanagerComponent implements OnInit {
   ngOnInit() {
     this.apiService.getAllAlbums().subscribe(res => {
       this.albums = res;
+      this.isPhotoManagerActive = false;
       console.log(this.albums);
     });
   }
@@ -45,8 +50,10 @@ export class GallerymanagerComponent implements OnInit {
       console.log(resp);
       if (resp['status'] && resp['status'] === 200) {
         console.log('Deleted album successfully');
+        this.albums.splice(index, 1);
       } else {
         console.log('Error deleting album');
+        alert('Could not delete album. Please try again later.');
       }
     });
   }
@@ -75,12 +82,14 @@ export class GallerymanagerComponent implements OnInit {
       });
     } else {
       console.log('Creating new album ...');
-      this.apiService.createAlbum(this.selectedAlbum).subscribe(resp => {
+      this.apiService.createAlbum(this.albums[0]).subscribe(resp => {
         console.log(resp);
         if (resp['status'] && resp['status'] === 200) {
-
+          const createdAlbum = resp['album'];
+          createdAlbum.isEditing = false;
+          this.albums.splice(0, 1, createdAlbum);
         } else {
-
+          alert('Failed to creat album. Please try again later.');
         }
       });
     }
@@ -90,17 +99,53 @@ export class GallerymanagerComponent implements OnInit {
     $event.stopPropagation();
     const album = this.albums[index] as Album;
     album.isEditing = false;
+    if (album.id < 0) {
+      this.albums.splice(0, 1);
+    }
   }
 
   onViewAlbum($event, i) {
     $event.stopPropagation();
-    this.router.navigate(['albummanager']);
+    this.selectedAlbum = this.albums[i];
+    this.isPhotoManagerActive = true;
   }
 
   addNewAlbum($event) {
     $event.stopPropagation();
-    let album = new Album(-1, '', '', -1);
+    const album = new Album(-1, '', '', -1);
     album.isEditing = true;
     this.albums.splice(0, 0, album);
+  }
+
+  addNewPhoto($event) {
+
+  }
+
+  backToAlbumManager() {
+    this.isPhotoManagerActive = false;
+  }
+
+  selectImageListener($event) {
+    this.readThis($event.target);
+  }
+
+  readThis(inputValue: any): void {
+    let file: File = inputValue.files[0];
+    let myReader: FileReader = new FileReader();
+    myReader.onloadend = (e) => {
+      this.uploadImage = myReader.result;
+      const fileName = file.name;
+      const albumId = this.selectedAlbum.id;
+      console.log(fileName);
+      this.apiService.uploadPhoto(this.selectedAlbum.id, fileName, myReader.result).subscribe(resp => {
+        if (resp['status'] && resp['status'] === 200) {
+          console.log('Uploaded photo successfully ...');
+        } else {
+          console.log('Failed to upload photo ...');
+          alert(resp['error']);
+        }
+      });
+    };
+    myReader.readAsDataURL(file);
   }
 }

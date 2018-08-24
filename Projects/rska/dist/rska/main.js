@@ -940,7 +940,7 @@ var GalleryComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"card manager-container\">\n    <div class=\"card-header\">\n        <div>\n          <span>Gallery Manager</span>\n          <span class=\"album-add-btn\"><button class=\"btn btn-primary\"\n                (click)=\"addNewAlbum($event)\">New</button></span>\n        </div>\n    </div>\n    <div class=\"card-body\">\n      <ul class=\"album-manager-list\">\n        <li *ngFor=\"let album of albums; let i=index\">\n          <div class=\"album-manager-list-container\">\n          <div class=\"row\">\n            <div class=\"col-4\">\n              <a href=\"#\">\n                <img class = \"album-manager-cover\" src=\"../../../assets/images/album-cover.jpg\">\n              </a>\n            </div>\n            <div class=\"col-8\">\n              <div *ngIf=\"!album.isEditing\">\n                <p><b>{{album.name}}</b></p>\n                <p>{{album.description}}</p>\n                <br>\n                <button class=\"btn btn-primary btn-album-operation\"\n                        (click)=\"onModifyAlbum($event, i)\">Modify</button>\n\n                <button class=\"btn btn-primary btn-album-operation\"\n                        (click)=\"onViewAlbum($event, i)\">View</button>\n\n                <button class=\"btn btn-danger btn-album-operation\"\n                        (click)=\"onDeleteAlbum($event, i)\">Delete</button>\n              </div>\n              <div *ngIf=\"album.isEditing\">\n                <input type=\"text\"\n                       [(ngModel)]=\"modifiedAlbumName\"\n                       class=\"form-control\"\n                       placeholder=\"Album Name\">\n                <textarea name=\"albumDescription\"\n                          [(ngModel)]=\"modifiedAlbumDescription\"\n                          class=\"form-control\"\n                          placeholder=\"Descriiption\"></textarea>\n                <button class=\"btn btn-primary btn-album-operation\"\n                        (click)=\"onEditAlbum($event, i)\">OK</button>\n                <button class=\"btn btn-default btn-album-operation\"\n                        (click)=\"onCancel($event, i)\">Cancel</button>\n              </div>\n\n            </div>\n          </div>\n        </div>\n        </li>\n      </ul>\n    </div>\n</div>\n"
+module.exports = "<div class=\"card manager-container\" *ngIf=\"!isPhotoManagerActive\">\n    <div class=\"card-header\">\n        <div>\n          <span>Album Manager</span>\n          <span class=\"album-add-btn\"><button class=\"btn btn-primary\"\n                (click)=\"addNewAlbum($event)\">New</button></span>\n        </div>\n    </div>\n    <div class=\"card-body\">\n      <ul class=\"album-manager-list\">\n        <li *ngFor=\"let album of albums; let i=index\">\n          <div class=\"album-manager-list-container\">\n          <div class=\"row\">\n            <div class=\"col-4\">\n              <a class=\"btn\" (click)=\"onViewAlbum($event, i)\">\n                <img class = \"album-manager-cover\" src=\"../../../assets/images/album-cover.jpg\">\n              </a>\n            </div>\n            <div class=\"col-8\">\n              <div *ngIf=\"!album.isEditing\">\n                <p><b>{{album.name}}</b></p>\n                <p>{{album.description}}</p>\n                <br>\n                <button class=\"btn btn-primary btn-album-operation\"\n                        (click)=\"onModifyAlbum($event, i)\">Modify</button>\n\n                <button class=\"btn btn-primary btn-album-operation\"\n                        (click)=\"onViewAlbum($event, i)\">View</button>\n\n                <button class=\"btn btn-danger btn-album-operation\"\n                        (click)=\"onDeleteAlbum($event, i)\">Delete</button>\n              </div>\n              <div *ngIf=\"album.isEditing\">\n                <input type=\"text\"\n                       [(ngModel)]=\"modifiedAlbumName\"\n                       class=\"form-control\"\n                       placeholder=\"Album Name\">\n                <textarea name=\"albumDescription\"\n                          [(ngModel)]=\"modifiedAlbumDescription\"\n                          class=\"form-control\"\n                          placeholder=\"Descriiption\"></textarea>\n                <button class=\"btn btn-primary btn-album-operation\"\n                        (click)=\"onEditAlbum($event, i)\">OK</button>\n                <button class=\"btn btn-default btn-album-operation\"\n                        (click)=\"onCancel($event, i)\">Cancel</button>\n              </div>\n\n            </div>\n          </div>\n        </div>\n        </li>\n      </ul>\n    </div>\n</div>\n<div class=\"card manager-container\" *ngIf=\"isPhotoManagerActive\">\n  <div class=\"card-header\">\n    <div>\n      <span>Photo Manager</span>\n      <span class=\"album-add-btn\">\n        <button class=\"btn btn-primary album-add-btn\"\n            (click)=\"addNewPhoto($event)\">\n            New\n        </button>\n        <button class=\"btn btn-danger album-add-btn\"\n        (click)=\"backToAlbumManager()\">\n          Close\n        </button>\n      </span>\n    </div>\n    <div>\n      <p class=\"photo-title-text\">{{ selectedAlbum.name }}</p>\n    </div>\n  </div>\n  <div class=\"card-body\">\n      <input type=\"file\"\n             accept=\"image/*\"\n             (change)=\"selectImageListener($event)\">\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -991,6 +991,7 @@ var GallerymanagerComponent = /** @class */ (function () {
         var _this = this;
         this.apiService.getAllAlbums().subscribe(function (res) {
             _this.albums = res;
+            _this.isPhotoManagerActive = false;
             console.log(_this.albums);
         });
     };
@@ -1004,6 +1005,7 @@ var GallerymanagerComponent = /** @class */ (function () {
         console.log('Modifying album' + album.name);
     };
     GallerymanagerComponent.prototype.onDeleteAlbum = function ($event, index) {
+        var _this = this;
         $event.stopPropagation();
         var album = this.albums[index];
         console.log('Deleting album' + album.name);
@@ -1011,9 +1013,11 @@ var GallerymanagerComponent = /** @class */ (function () {
             console.log(resp);
             if (resp['status'] && resp['status'] === 200) {
                 console.log('Deleted album successfully');
+                _this.albums.splice(index, 1);
             }
             else {
                 console.log('Error deleting album');
+                alert('Could not delete album. Please try again later.');
             }
         });
     };
@@ -1041,22 +1045,66 @@ var GallerymanagerComponent = /** @class */ (function () {
         }
         else {
             console.log('Creating new album ...');
+            this.apiService.createAlbum(this.albums[0]).subscribe(function (resp) {
+                console.log(resp);
+                if (resp['status'] && resp['status'] === 200) {
+                    var createdAlbum = resp['album'];
+                    createdAlbum.isEditing = false;
+                    _this.albums.splice(0, 1, createdAlbum);
+                }
+                else {
+                    alert('Failed to creat album. Please try again later.');
+                }
+            });
         }
     };
     GallerymanagerComponent.prototype.onCancel = function ($event, index) {
         $event.stopPropagation();
         var album = this.albums[index];
         album.isEditing = false;
+        if (album.id < 0) {
+            this.albums.splice(0, 1);
+        }
     };
     GallerymanagerComponent.prototype.onViewAlbum = function ($event, i) {
         $event.stopPropagation();
-        this.router.navigate(['albummanager']);
+        this.selectedAlbum = this.albums[i];
+        this.isPhotoManagerActive = true;
     };
     GallerymanagerComponent.prototype.addNewAlbum = function ($event) {
         $event.stopPropagation();
         var album = new _model_album__WEBPACK_IMPORTED_MODULE_0__["Album"](-1, '', '', -1);
         album.isEditing = true;
         this.albums.splice(0, 0, album);
+    };
+    GallerymanagerComponent.prototype.addNewPhoto = function ($event) {
+    };
+    GallerymanagerComponent.prototype.backToAlbumManager = function () {
+        this.isPhotoManagerActive = false;
+    };
+    GallerymanagerComponent.prototype.selectImageListener = function ($event) {
+        this.readThis($event.target);
+    };
+    GallerymanagerComponent.prototype.readThis = function (inputValue) {
+        var _this = this;
+        var file = inputValue.files[0];
+        var myReader = new FileReader();
+        myReader.onloadend = function (e) {
+            _this.uploadImage = myReader.result;
+            var fileName = file.name;
+            var albumId = _this.selectedAlbum.id;
+            console.log(fileName);
+            _this.apiService.uploadPhoto(_this.selectedAlbum.id, fileName, myReader.result).subscribe(function (resp) {
+                if (resp['status'] && resp['status'] === 200) {
+                    console.log('Uploaded photo successfully ...');
+                }
+                else {
+                    console.log('Failed to upload photo ...');
+                    alert(resp['error']);
+                }
+            });
+        };
+        myReader.readAsDataURL(file);
     };
     GallerymanagerComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["Component"])({
@@ -1564,6 +1612,7 @@ var ApiService = /** @class */ (function () {
         this.http = http;
         this.utilityService = utilityService;
     }
+    /* Unprotected public api */
     ApiService.prototype.getPublic = function (method) {
         var httpOptions = {
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({ 'Content-Type': 'application/json' })
@@ -1578,6 +1627,7 @@ var ApiService = /** @class */ (function () {
         var url = publicURL + method;
         return this.http.post(url, body, httpOptions);
     };
+    /* API's protected with web token */
     ApiService.prototype.getProtected = function (body, method) {
     };
     ApiService.prototype.postProtected = function (body, method) {
@@ -1619,11 +1669,22 @@ var ApiService = /** @class */ (function () {
         return this.postProtected(body, '/album/delete');
     };
     ApiService.prototype.createAlbum = function (album) {
+        console.log(album);
         var body = {
             'name': album.name,
             'description': album.description
         };
+        console.log('body ...');
+        console.log(body);
         return this.postProtected(body, '/album/create');
+    };
+    ApiService.prototype.uploadPhoto = function (albumId, fileName, fileData) {
+        var body = {
+            imagedata: fileData,
+            filename: fileName,
+            albumid: albumId
+        };
+        return this.postProtected(body, '/album/upload');
     };
     ApiService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
