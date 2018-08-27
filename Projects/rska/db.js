@@ -110,21 +110,27 @@ var db = {
   },
 
   //Upload photo
-  savePhoto(photoURL, albumId, callBack) {
-    var localdb = new sqlite3.Database('./assets/database/rska.sqlite', sqlite3.OPEN_READONLY);
+  savePhoto(photoURL, albumId, fileName, callBack) {
+    var localdb = new sqlite3.Database('./assets/database/rska.sqlite', sqlite3.OPEN_READWRITE);
 
-    let sql = 'INSERT INTO photo (photourl, photoalbum) VALUES (?,?)';
-    let dataValue = [photoURL, albumId];
+    let sql = 'INSERT INTO photo (photourl, photoalbum, filename) VALUES (?,?,?)';
+    let dataValue = [photoURL, albumId, fileName];
     console.log('Going to insert photo record in table...');
-    localdb.run(sql, dataValue, (row, err) => {
-      console.log(err);
+    console.log(sql);
+    console.log(dataValue);
+    localdb.run(sql, dataValue, function(err) {
       if (err) {
-        console.log(err);
+        console.log('ERROR: ' + err);
         callBack({}, 'Error uploading photo. Contact IT support.', false);
       } else {
         console.log('Upload successful...');
-        console.log(row);
-        callBack(row, 'Photo uploaded successfully.', true);
+        console.warn("inserted id:", this.lastID);
+        var photoDetails = {
+                             id: this.lastID,
+                             name: fileName,
+                             albumid: albumId
+                           };
+        callBack(photoDetails, 'Photo uploaded successfully.', true);
       }
     });
 
@@ -142,7 +148,6 @@ var db = {
         console.log('Fetch photos successful ...');
         callBack(rows, true, err);
       }
-
     });
     localdb.close();
   }

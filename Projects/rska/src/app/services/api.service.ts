@@ -102,4 +102,10 @@ export class ApiService {
     };
     return this.postProtected(body, '/album/upload');
   }
+
+  public getPhotos(albumId) {
+    const method = '/getphotos/' + albumId;
+
+    return this.getPublic(method);
+  }
 }

@@ -29,4 +29,10 @@ response.photo = {
   error: ''
 }
 
+response.photos = {
+  photos: [],
+  status: 200,
+  error: ''
+}
+
 module.exports = response;

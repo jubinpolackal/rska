@@ -130,4 +130,20 @@ apiRoutes.route('/getalbums').get((req, res, next) => {
   });
 });
 
+apiRoutes.route('/getphotos/:albumid').get((req, res, next) => {
+  albumId = req.params.albumid;
+  console.log('Fetching photos for album id: ' + albumId);
+  var userResponse = responses.photos;
+  db.getPhotos(albumId, (result, status, error) => {
+    if (status) {
+      userResponse.photos = result;
+    } else {
+      userResponse.status = 400;
+      userResponse.error = error;
+    }
+
+    res.send(userResponse);
+  });
+});
+
 module.exports = apiRoutes;

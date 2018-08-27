@@ -11,11 +11,6 @@ var publicRoutes = require('./routes/routes-public');
 const app = express();
 
 // Parsers
-// app.use(bodyParser.urlencoded({
-//   json: {limit: '50mb', extended: true},
-//   urlencoded: {limit: '50mb', extended: true},
-//   extended: true
-// }));
 app.use(bodyParser.json({limit: '25mb', extended: true}));
 app.use(bodyParser.urlencoded({limit: '25mb', extended: true}));
 app.use(bodyParser.json());
@@ -23,6 +18,12 @@ app.use(bodyParser.json());
 // Angular DIST output folder
 app.use(express.static(path.join(__dirname, 'dist/rska')));
 
+// Image path
+var imageDir = path.join(__dirname,'gallery');
+console.log(imageDir);
+app.use('/gallery', express.static(imageDir));
+
+// Verify webtoken for protected paths
 function verifyToken(req,res,next) {
   var token = req.body.token ||
               req.query.token ||
@@ -56,8 +57,6 @@ app.get('/', (req, res)=>{
   console.log("Sending index.html ...");
   res.sendFile(path.join(__dirname, 'dist/rska'));
 });
-
-var publicRoutes = require('./routes/routes-public');
 
 app.use('/public', publicRoutes);
 

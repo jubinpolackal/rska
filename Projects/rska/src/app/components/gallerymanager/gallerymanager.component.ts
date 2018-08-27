@@ -108,6 +108,14 @@ export class GallerymanagerComponent implements OnInit {
     $event.stopPropagation();
     this.selectedAlbum = this.albums[i];
     this.isPhotoManagerActive = true;
+    this.apiService.getPhotos(this.selectedAlbum.id).subscribe(resp => {
+      if (resp['status'] && resp['status'] === 200) {
+        this.photos = resp['photos'];
+        console.log(this.photos);
+      } else {
+        console.log(resp['error']);
+      }
+    });
   }
 
   addNewAlbum($event) {
@@ -130,8 +138,8 @@ export class GallerymanagerComponent implements OnInit {
   }
 
   readThis(inputValue: any): void {
-    let file: File = inputValue.files[0];
-    let myReader: FileReader = new FileReader();
+    const file: File = inputValue.files[0];
+    const myReader: FileReader = new FileReader();
     myReader.onloadend = (e) => {
       this.uploadImage = myReader.result;
       const fileName = file.name;
@@ -140,6 +148,8 @@ export class GallerymanagerComponent implements OnInit {
       this.apiService.uploadPhoto(this.selectedAlbum.id, fileName, myReader.result).subscribe(resp => {
         if (resp['status'] && resp['status'] === 200) {
           console.log('Uploaded photo successfully ...');
+          const photo: Photo = resp['photo'];
+          this.photos.push(photo);
         } else {
           console.log('Failed to upload photo ...');
           alert(resp['error']);
@@ -147,5 +157,10 @@ export class GallerymanagerComponent implements OnInit {
       });
     };
     myReader.readAsDataURL(file);
+  }
+
+  onDeletePhoto($event, i) {
+    const photoDeleted = this.photos[i];
+
   }
 }

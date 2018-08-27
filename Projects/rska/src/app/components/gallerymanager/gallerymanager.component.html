@@ -76,4 +76,24 @@
              accept="image/*"
              (change)="selectImageListener($event)">
   </div>
+  <div class="card-body">
+    <ul class="album-manager-list">
+      <li *ngFor="let photo of photos; let i=index">
+        <div class="album-manager-list-container">
+          <div class="row">
+            <div class="col-4">
+                <img class = "album-manager-cover" [src]="photo.photourl">
+            </div>
+            <div class="col-8">
+              <p>{{photo.id}}</p>
+              <p>{{photo.photourl}}</p>
+              <br>
+              <button class="btn btn-danger btn-album-operation"
+              (click)="onDeletePhoto($event, i)">Delete</button>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
 </div>

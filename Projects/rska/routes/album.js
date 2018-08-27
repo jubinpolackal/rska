@@ -6,6 +6,7 @@ var express = require('express'),
     db = require('../db'),
     config = require('../config'),
     path = require('path'),
+    base64ToImage = require('base64-to-image'),
     responses = require('../response');
 
 
@@ -66,38 +67,35 @@ router.route('/update').post(function (req, res, body) {
   });
 });
 
+//Upload image to an album
 router.route('/upload').post(function(req, res, body){
   console.log('Upload photo ...');
   var userResponse = responses.photo;
   var imageData = req.body;
-  var base64Data = imageData.imagedata.replace(/^data:image\/jpeg;base64,/, "");
   var albumId = imageData.albumid;
 
-  // var f = fs.createWriteStream('/assets/images/gallery/'+imageData.filename);
-  // f.write(base64Data);
-  // f.end();
-  //var url = path.join(__dirname, '/assets/images/gallery/'+imageData.filename);
-  var url = __dirname + '/../assets/images/gallery/' + imageData.filename;
+  var url = __dirname + '/../gallery/';
   console.log(url);
-  fs.writeFile(url, base64Data, (err)=>{
-    if (err) {
+
+  var base64Str = imageData.imagedata;
+  var optionalObj = {'fileName': imageData.filename, 'type':'jpeg'};
+  var imageInfo = base64ToImage(base64Str, url, optionalObj);
+
+  var symbolicUrl = '/gallery/';
+
+  console.log(imageInfo);
+
+  db.savePhoto(symbolicUrl+imageData.filename, albumId, imageData.filename, (row, err, status) => {
+    if (!status) {
       console.log(err);
       userResponse.status = 403;
-      userResponse.error = 'Failed to upload photo';
+      userResponse.error = 'Failed to upload image.';
       res.send(userResponse);
     } else {
-      db.savePhoto(url, imageData.albumid, (row, err, status)=>{
-        if (!status) {
-          userResponse.status = 403;
-          userResponse.error = 'Failed to upload image.';
-          res.send(userResponse);
-        } else {
-          userResponse.status = 200;
-          userResponse.err = 'Photo uploaded successfully.';
-          userResponse.photo = row;
-          res.send(userResponse);
-        }
-      });
+      userResponse.status = 200;
+      userResponse.err = 'Photo uploaded successfully.';
+      userResponse.photo = row;
+      res.send(userResponse);
     }
   });
 });

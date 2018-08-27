@@ -1,11 +1,13 @@
 export class Photo {
   id: number;
-  url: string;
-  albumid: number;
+  photourl: string;
+  photoalbum: number;
+  filename: string;
 
-  constructor(id, url, albumid ) {
+  constructor(id, albumid, filename, url ) {
     this.id = id;
-    this.url = url;
-    this.albumid = albumid;
+    this.photourl = url;
+    this.filename = filename;
+    this.photoalbum = albumid;
   }
 }
