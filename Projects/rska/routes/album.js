@@ -18,16 +18,19 @@ app.use(bodyParser.urlencoded({limit: '25mb', extended: true}));
 
 app.use(bodyParser.json());
 
+// Delete album
 router.route('/delete').post(function (req, res, body) {
   console.log('Deleting album');
   var userResponse = responses.albums;
 
   db.deleteAlbum(req.body.id, (err, status) => {
+    respObject = {
+      status: 400
+    };
     if (status) {
-      res.sendStatus(200);
-    } else {
-      res.sendStatus(401);
+      respObject.status = 200;
     }
+    res.send(respObject);
   });
 });
 

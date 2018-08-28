@@ -75,12 +75,43 @@ var db = {
     localdb.close();
   },
 
-//Delete album
+// Delete album from database, including all the uploaded photos
   deleteAlbum: function(id, callBack) {
     var localdb = new sqlite3.Database('./assets/database/rska.sqlite', sqlite3.OPEN_READWRITE);
+    var photoSql = 'SELECT * FROM photo WHERE photoalbum=?';
+    var photoData = [id];
+
+    localdb.all(photoSql, photoData, (err, rows)=>{
+      var errorData = null;
+      if (!err) {
+        rows.forEach((row) => {
+          console.log(row);
+          var filePath = row['fileUrl'];
+          console.log(filePath);
+          if (filePath) {
+            console.log('Deleting: ' + filePath);
+            fs.unlinkSync(filePath);
+          } else {
+            errorData = 'Resource not found.';
+            console.log(errorData);
+            callBack(errorData, false);
+            return;
+          }
+        });
+        this.removeAlbum(id, localdb, callBack);
+      } else {
+        errorData = err;
+        callBack(errorData, false);
+        return;
+      }
+    });
+    localdb.close();
+  },
+
+  removeAlbum(id, dbInstance, callBack) {
     let sql = 'DELETE FROM album WHERE id=?';
     console.log('Album id: '+id);
-    localdb.run(sql, id, (err) => {
+    dbInstance.run(sql, id, (err) => {
       if (err) {
         console.log(err);
         callBack('Error deleting album. Contact IT support.', false);
@@ -90,7 +121,6 @@ var db = {
         callBack('Deleted the album successfully', true);
       }
     });
-    localdb.close();
   },
 
 //Get all albums from database
