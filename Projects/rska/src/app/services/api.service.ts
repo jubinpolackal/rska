@@ -108,4 +108,13 @@ export class ApiService {
 
     return this.getPublic(method);
   }
+
+  public deletePhoto(photoId, albumId) {
+    const methodName = '/album/remove';
+    const body = {
+      id: photoId,
+      photoalbum: albumId
+    };
+    return this.postProtected(body, methodName);
+  }
 }

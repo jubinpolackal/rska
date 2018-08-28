@@ -161,6 +161,15 @@ export class GallerymanagerComponent implements OnInit {
 
   onDeletePhoto($event, i) {
     const photoDeleted = this.photos[i];
+    const albumId = this.selectedAlbum.id;
 
+    this.apiService.deletePhoto(photoDeleted.id, albumId).subscribe(resp => {
+      if (resp['status'] && resp['status'] === 200) {
+        console.log('Photo deleted successfully.');
+        this.photos.splice(i, 1);
+      } else {
+        console.log('Failed to delete photo');
+      }
+    });
   }
 }

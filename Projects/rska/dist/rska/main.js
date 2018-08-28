@@ -940,7 +940,7 @@ var GalleryComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"card manager-container\" *ngIf=\"!isPhotoManagerActive\">\n    <div class=\"card-header\">\n        <div>\n          <span>Album Manager</span>\n          <span class=\"album-add-btn\"><button class=\"btn btn-primary\"\n                (click)=\"addNewAlbum($event)\">New</button></span>\n        </div>\n    </div>\n    <div class=\"card-body\">\n      <ul class=\"album-manager-list\">\n        <li *ngFor=\"let album of albums; let i=index\">\n          <div class=\"album-manager-list-container\">\n          <div class=\"row\">\n            <div class=\"col-4\">\n              <a class=\"btn\" (click)=\"onViewAlbum($event, i)\">\n                <img class = \"album-manager-cover\" src=\"../../../assets/images/album-cover.jpg\">\n              </a>\n            </div>\n            <div class=\"col-8\">\n              <div *ngIf=\"!album.isEditing\">\n                <p><b>{{album.name}}</b></p>\n                <p>{{album.description}}</p>\n                <br>\n                <button class=\"btn btn-primary btn-album-operation\"\n                        (click)=\"onModifyAlbum($event, i)\">Modify</button>\n\n                <button class=\"btn btn-primary btn-album-operation\"\n                        (click)=\"onViewAlbum($event, i)\">View</button>\n\n                <button class=\"btn btn-danger btn-album-operation\"\n                        (click)=\"onDeleteAlbum($event, i)\">Delete</button>\n              </div>\n              <div *ngIf=\"album.isEditing\">\n                <input type=\"text\"\n                       [(ngModel)]=\"modifiedAlbumName\"\n                       class=\"form-control\"\n                       placeholder=\"Album Name\">\n                <textarea name=\"albumDescription\"\n                          [(ngModel)]=\"modifiedAlbumDescription\"\n                          class=\"form-control\"\n                          placeholder=\"Descriiption\"></textarea>\n                <button class=\"btn btn-primary btn-album-operation\"\n                        (click)=\"onEditAlbum($event, i)\">OK</button>\n                <button class=\"btn btn-default btn-album-operation\"\n                        (click)=\"onCancel($event, i)\">Cancel</button>\n              </div>\n\n            </div>\n          </div>\n        </div>\n        </li>\n      </ul>\n    </div>\n</div>\n<div class=\"card manager-container\" *ngIf=\"isPhotoManagerActive\">\n  <div class=\"card-header\">\n    <div>\n      <span>Photo Manager</span>\n      <span class=\"album-add-btn\">\n        <button class=\"btn btn-primary album-add-btn\"\n            (click)=\"addNewPhoto($event)\">\n            New\n        </button>\n        <button class=\"btn btn-danger album-add-btn\"\n        (click)=\"backToAlbumManager()\">\n          Close\n        </button>\n      </span>\n    </div>\n    <div>\n      <p class=\"photo-title-text\">{{ selectedAlbum.name }}</p>\n    </div>\n  </div>\n  <div class=\"card-body\">\n      <input type=\"file\"\n             accept=\"image/*\"\n             (change)=\"selectImageListener($event)\">\n  </div>\n  <div class=\"card-body\">\n    <ul class=\"album-manager-list\">\n      <li *ngFor=\"let photo of photos; let i=index\">\n        <div class=\"album-manager-list-container\">\n          <div class=\"row\">\n            <div class=\"col-4\">\n                <img class = \"album-manager-cover\" [src]=\"photo.photourl\">\n            </div>\n          </div>\n        </div>\n      </li>\n    </ul>\n  </div>\n</div>\n"
+module.exports = "<div class=\"card manager-container\" *ngIf=\"!isPhotoManagerActive\">\n    <div class=\"card-header\">\n        <div>\n          <span>Album Manager</span>\n          <span class=\"album-add-btn\"><button class=\"btn btn-primary\"\n                (click)=\"addNewAlbum($event)\">New</button></span>\n        </div>\n    </div>\n    <div class=\"card-body\">\n      <ul class=\"album-manager-list\">\n        <li *ngFor=\"let album of albums; let i=index\">\n          <div class=\"album-manager-list-container\">\n          <div class=\"row\">\n            <div class=\"col-4\">\n              <a class=\"btn\" (click)=\"onViewAlbum($event, i)\">\n                <img class = \"album-manager-cover\" src=\"../../../assets/images/album-cover.jpg\">\n              </a>\n            </div>\n            <div class=\"col-8\">\n              <div *ngIf=\"!album.isEditing\">\n                <p><b>{{album.name}}</b></p>\n                <p>{{album.description}}</p>\n                <br>\n                <button class=\"btn btn-primary btn-album-operation\"\n                        (click)=\"onModifyAlbum($event, i)\">Modify</button>\n\n                <button class=\"btn btn-primary btn-album-operation\"\n                        (click)=\"onViewAlbum($event, i)\">View</button>\n\n                <button class=\"btn btn-danger btn-album-operation\"\n                        (click)=\"onDeleteAlbum($event, i)\">Delete</button>\n              </div>\n              <div *ngIf=\"album.isEditing\">\n                <input type=\"text\"\n                       [(ngModel)]=\"modifiedAlbumName\"\n                       class=\"form-control\"\n                       placeholder=\"Album Name\">\n                <textarea name=\"albumDescription\"\n                          [(ngModel)]=\"modifiedAlbumDescription\"\n                          class=\"form-control\"\n                          placeholder=\"Descriiption\"></textarea>\n                <button class=\"btn btn-primary btn-album-operation\"\n                        (click)=\"onEditAlbum($event, i)\">OK</button>\n                <button class=\"btn btn-default btn-album-operation\"\n                        (click)=\"onCancel($event, i)\">Cancel</button>\n              </div>\n\n            </div>\n          </div>\n        </div>\n        </li>\n      </ul>\n    </div>\n</div>\n<div class=\"card manager-container\" *ngIf=\"isPhotoManagerActive\">\n  <div class=\"card-header\">\n    <div>\n      <span>Photo Manager</span>\n      <span class=\"album-add-btn\">\n        <button class=\"btn btn-primary album-add-btn\"\n            (click)=\"addNewPhoto($event)\">\n            New\n        </button>\n        <button class=\"btn btn-danger album-add-btn\"\n        (click)=\"backToAlbumManager()\">\n          Close\n        </button>\n      </span>\n    </div>\n    <div>\n      <p class=\"photo-title-text\">{{ selectedAlbum.name }}</p>\n    </div>\n  </div>\n  <div class=\"card-body\">\n      <input type=\"file\"\n             accept=\"image/*\"\n             (change)=\"selectImageListener($event)\">\n  </div>\n  <div class=\"card-body\">\n    <ul class=\"album-manager-list\">\n      <li *ngFor=\"let photo of photos; let i=index\">\n        <div class=\"album-manager-list-container\">\n          <div class=\"row\">\n            <div class=\"col-4\">\n                <img class = \"album-manager-cover\" [src]=\"photo.photourl\">\n            </div>\n            <div class=\"col-8\">\n              <p>{{photo.id}}</p>\n              <p>{{photo.photourl}}</p>\n              <br>\n              <button class=\"btn btn-danger btn-album-operation\"\n              (click)=\"onDeletePhoto($event, i)\">Delete</button>\n            </div>\n          </div>\n        </div>\n      </li>\n    </ul>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -1117,6 +1117,20 @@ var GallerymanagerComponent = /** @class */ (function () {
             });
         };
         myReader.readAsDataURL(file);
+    };
+    GallerymanagerComponent.prototype.onDeletePhoto = function ($event, i) {
+        var _this = this;
+        var photoDeleted = this.photos[i];
+        var albumId = this.selectedAlbum.id;
+        this.apiService.deletePhoto(photoDeleted.id, albumId).subscribe(function (resp) {
+            if (resp['status'] && resp['status'] === 200) {
+                console.log('Photo deleted successfully.');
+                _this.photos.splice(i, 1);
+            }
+            else {
+                console.log('Failed to delete photo');
+            }
+        });
     };
     GallerymanagerComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["Component"])({
@@ -1701,6 +1715,14 @@ var ApiService = /** @class */ (function () {
     ApiService.prototype.getPhotos = function (albumId) {
         var method = '/getphotos/' + albumId;
         return this.getPublic(method);
+    };
+    ApiService.prototype.deletePhoto = function (photoId, albumId) {
+        var methodName = '/album/remove';
+        var body = {
+            id: photoId,
+            photoalbum: albumId
+        };
+        return this.postProtected(body, methodName);
     };
     ApiService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({

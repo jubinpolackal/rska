@@ -1,4 +1,5 @@
 
+var fs = require('fs');
 const sqlite3 = require('sqlite3').verbose();
 
 var db = {
@@ -110,11 +111,11 @@ var db = {
   },
 
   //Upload photo
-  savePhoto(photoURL, albumId, fileName, callBack) {
+  savePhoto(photoURL, albumId, fileName, fileURL, callBack) {
     var localdb = new sqlite3.Database('./assets/database/rska.sqlite', sqlite3.OPEN_READWRITE);
 
-    let sql = 'INSERT INTO photo (photourl, photoalbum, filename) VALUES (?,?,?)';
-    let dataValue = [photoURL, albumId, fileName];
+    let sql = 'INSERT INTO photo (photourl, photoalbum, filename, fileUrl) VALUES (?,?,?,?)';
+    let dataValue = [photoURL, albumId, fileName, fileURL];
     console.log('Going to insert photo record in table...');
     console.log(sql);
     console.log(dataValue);
@@ -128,7 +129,8 @@ var db = {
         var photoDetails = {
                              id: this.lastID,
                              name: fileName,
-                             albumid: albumId
+                             albumid: albumId,
+                             photourl: photoURL
                            };
         callBack(photoDetails, 'Photo uploaded successfully.', true);
       }
@@ -149,6 +151,40 @@ var db = {
         callBack(rows, true, err);
       }
     });
+    localdb.close();
+  },
+
+  // Delete photo
+  deletePhoto(photoId, albumId, callback) {
+    var localdb = new sqlite3.Database('./assets/database/rska.sqlite', sqlite3.OPEN_READWRITE);
+
+    var sql = 'DELETE FROM photo WHERE id=? AND photoalbum=?';
+    var selectSQL = 'SELECT fileUrl FROM photo WHERE id=? AND photoalbum=?';
+    var data = [photoId, albumId];
+
+    console.log(data);
+
+    localdb.get(selectSQL, data, (err, row) => {
+      if (err) {
+        console.log(err);
+        callback({}, "File not found.", false);
+        return;
+      } else {
+        console.log(row);
+        var fileUrl = row['fileUrl'];
+        fs.unlinkSync(fileUrl);
+        localdb.run(sql, data, (row, err) => {
+          if (err) {
+            console.log(err);
+            callback({}, "Error deleting photo.", false);
+          } else {
+            console.log('Deleted photo successfully');
+            callback({}, 'Photo deleted successfully.', true);
+          }
+        });
+      }
+    });
+
     localdb.close();
   }
 }

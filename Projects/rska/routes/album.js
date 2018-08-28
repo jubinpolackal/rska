@@ -85,7 +85,7 @@ router.route('/upload').post(function(req, res, body){
 
   console.log(imageInfo);
 
-  db.savePhoto(symbolicUrl+imageData.filename, albumId, imageData.filename, (row, err, status) => {
+  db.savePhoto(symbolicUrl+imageData.filename, albumId, imageData.filename, url+imageData.filename, (row, err, status) => {
     if (!status) {
       console.log(err);
       userResponse.status = 403;
@@ -98,6 +98,26 @@ router.route('/upload').post(function(req, res, body){
       res.send(userResponse);
     }
   });
+});
+
+// Delete image
+router.route('/remove').post(function(req, res, body){
+  var photoId = req.body.id;
+  var albumId = req.body.photoalbum;
+
+  db.deletePhoto(photoId, albumId, (result, err, status) => {
+    if (!status) {
+      res.send({
+        status: 400,
+        error: err
+      });
+    } else {
+      res.send({
+        status: 200,
+        error: 'Photo deleted successfully.'});
+    }
+  });
+
 });
 
 module.exports = router;
