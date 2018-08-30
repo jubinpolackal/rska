@@ -1,8 +1,9 @@
 import { Album } from './../../model/album';
 import { ApiService } from './../../services/api.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Photo } from '../../model/photo';
+import { ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-gallerymanager',
@@ -10,6 +11,8 @@ import { Photo } from '../../model/photo';
   styleUrls: ['./gallerymanager.component.scss']
 })
 export class GallerymanagerComponent implements OnInit {
+
+  @ViewChild('myUpload') myUploadVar: ElementRef;
 
   albums: Album[];
   photos: Photo[];
@@ -20,6 +23,9 @@ export class GallerymanagerComponent implements OnInit {
   modifiedAlbumDescription: string;
   isPhotoManagerActive: boolean;
   uploadImage: any;
+  uploadFileName: string;
+  myReader: FileReader;
+  showUploadButton: boolean;
 
   constructor(private apiService: ApiService,
               private router: Router) { }
@@ -28,6 +34,7 @@ export class GallerymanagerComponent implements OnInit {
     this.apiService.getAllAlbums().subscribe(res => {
       this.albums = res;
       this.isPhotoManagerActive = false;
+      this.showUploadButton = false;
       console.log(this.albums);
     });
   }
@@ -126,7 +133,20 @@ export class GallerymanagerComponent implements OnInit {
   }
 
   addNewPhoto($event) {
-
+    this.apiService.uploadPhoto(this.selectedAlbum.id,
+                                this.uploadFileName,
+                                this.uploadImage).subscribe(resp => {
+                                  if (resp['status'] && resp['status'] === 200) {
+                                    console.log('Uploaded photo successfully ...');
+                                    const photo: Photo = resp['photo'];
+                                    this.photos.push(photo);
+                                    this.myUploadVar.nativeElement.value = '';
+                                    this.showUploadButton = false;
+                                  } else {
+                                    console.log('Failed to upload photo ...');
+                                    alert(resp['error']);
+                                  }
+                                });
   }
 
   backToAlbumManager() {
@@ -139,24 +159,14 @@ export class GallerymanagerComponent implements OnInit {
 
   readThis(inputValue: any): void {
     const file: File = inputValue.files[0];
-    const myReader: FileReader = new FileReader();
-    myReader.onloadend = (e) => {
-      this.uploadImage = myReader.result;
-      const fileName = file.name;
-      const albumId = this.selectedAlbum.id;
-      console.log(fileName);
-      this.apiService.uploadPhoto(this.selectedAlbum.id, fileName, myReader.result).subscribe(resp => {
-        if (resp['status'] && resp['status'] === 200) {
-          console.log('Uploaded photo successfully ...');
-          const photo: Photo = resp['photo'];
-          this.photos.push(photo);
-        } else {
-          console.log('Failed to upload photo ...');
-          alert(resp['error']);
-        }
-      });
+    this.myReader = new FileReader();
+    this.myReader.onloadend = (e) => {
+      this.uploadImage = this.myReader.result;
+      this.uploadFileName = file.name;
+      console.log(this.uploadFileName);
+      this.showUploadButton = true;
     };
-    myReader.readAsDataURL(file);
+    this.myReader.readAsDataURL(file);
   }
 
   onDeletePhoto($event, i) {

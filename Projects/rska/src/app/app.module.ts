@@ -26,6 +26,7 @@ import { ClassmanagerComponent } from './components/classmanager/classmanager.co
 import { InstructorsmanagerComponent } from './components/instructorsmanager/instructorsmanager.component';
 import { CopyrightmanagerComponent } from './components/copyrightmanager/copyrightmanager.component';
 import { AlbummanagerComponent } from './components/albummanager/albummanager.component';
+import { GalleryitemComponent } from './components/gallery/galleryitem/galleryitem.component';
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -65,7 +66,8 @@ const appRoutes: Routes = [
     ClassmanagerComponent,
     InstructorsmanagerComponent,
     CopyrightmanagerComponent,
-    AlbummanagerComponent
+    AlbummanagerComponent,
+    GalleryitemComponent
   ],
   imports: [
     BrowserModule,

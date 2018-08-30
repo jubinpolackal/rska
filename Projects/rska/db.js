@@ -98,7 +98,16 @@ var db = {
             return;
           }
         });
-        this.removeAlbum(id, localdb, callBack);
+        var photoDeleteSql = 'DELETE FROM photo WHERE photoalbum=?'
+        localdb.run(photoDeleteSql, photoData, (err, row) => {
+          if (!err) {
+            this.removeAlbum(id, localdb, callBack);
+          } else {
+            errorData = 'Resource not found.';
+            callBack(errorData, false);
+            return;
+          }
+        });
       } else {
         errorData = err;
         callBack(errorData, false);

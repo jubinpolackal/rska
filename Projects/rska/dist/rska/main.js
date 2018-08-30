@@ -118,6 +118,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_instructorsmanager_instructorsmanager_component__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./components/instructorsmanager/instructorsmanager.component */ "./src/app/components/instructorsmanager/instructorsmanager.component.ts");
 /* harmony import */ var _components_copyrightmanager_copyrightmanager_component__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./components/copyrightmanager/copyrightmanager.component */ "./src/app/components/copyrightmanager/copyrightmanager.component.ts");
 /* harmony import */ var _components_albummanager_albummanager_component__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./components/albummanager/albummanager.component */ "./src/app/components/albummanager/albummanager.component.ts");
+/* harmony import */ var _components_gallery_galleryitem_galleryitem_component__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./components/gallery/galleryitem/galleryitem.component */ "./src/app/components/gallery/galleryitem/galleryitem.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -130,6 +131,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 //import { AppRoutingModule } from './app-routing.module';
+
 
 
 
@@ -193,7 +195,8 @@ var AppModule = /** @class */ (function () {
                 _components_classmanager_classmanager_component__WEBPACK_IMPORTED_MODULE_23__["ClassmanagerComponent"],
                 _components_instructorsmanager_instructorsmanager_component__WEBPACK_IMPORTED_MODULE_24__["InstructorsmanagerComponent"],
                 _components_copyrightmanager_copyrightmanager_component__WEBPACK_IMPORTED_MODULE_25__["CopyrightmanagerComponent"],
-                _components_albummanager_albummanager_component__WEBPACK_IMPORTED_MODULE_26__["AlbummanagerComponent"]
+                _components_albummanager_albummanager_component__WEBPACK_IMPORTED_MODULE_26__["AlbummanagerComponent"],
+                _components_gallery_galleryitem_galleryitem_component__WEBPACK_IMPORTED_MODULE_27__["GalleryitemComponent"]
             ],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
@@ -869,7 +872,7 @@ var FooterComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"section-title\">\n  <p class=\"section-title-text\">Gallery</p>\n</div>\n"
+module.exports = "<div>\n  <h1 class=\"main-header\">GALLERY</h1>\n\n  <div *ngFor=\"let album of albums\">\n    <app-galleryitem [album]=\"album\"></app-galleryitem>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -933,6 +936,113 @@ var GalleryComponent = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/components/gallery/galleryitem/galleryitem.component.html":
+/*!***************************************************************************!*\
+  !*** ./src/app/components/gallery/galleryitem/galleryitem.component.html ***!
+  \***************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"card\">\n    <div class=\"card-header\">\n      <h4>{{ albumName }}</h4>\n    </div>\n    <div class=\"card-body\">\n       <ngx-gallery [options]=\"galleryOptions\" [images]=\"galleryImages\"></ngx-gallery>\n    </div>\n</div>\n"
+
+/***/ }),
+
+/***/ "./src/app/components/gallery/galleryitem/galleryitem.component.scss":
+/*!***************************************************************************!*\
+  !*** ./src/app/components/gallery/galleryitem/galleryitem.component.scss ***!
+  \***************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/components/gallery/galleryitem/galleryitem.component.ts":
+/*!*************************************************************************!*\
+  !*** ./src/app/components/gallery/galleryitem/galleryitem.component.ts ***!
+  \*************************************************************************/
+/*! exports provided: GalleryitemComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GalleryitemComponent", function() { return GalleryitemComponent; });
+/* harmony import */ var _model_album__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./../../../model/album */ "./src/app/model/album.ts");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var ngx_gallery__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ngx-gallery */ "./node_modules/ngx-gallery/bundles/ngx-gallery.umd.js");
+/* harmony import */ var ngx_gallery__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(ngx_gallery__WEBPACK_IMPORTED_MODULE_2__);
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var GalleryitemComponent = /** @class */ (function () {
+    function GalleryitemComponent() {
+    }
+    GalleryitemComponent.prototype.ngOnInit = function () {
+        this.galleryOptions = [
+            {
+                width: '600px',
+                height: '400px',
+                thumbnailsColumns: 4,
+                imageAnimation: ngx_gallery__WEBPACK_IMPORTED_MODULE_2__["NgxGalleryAnimation"].Slide
+            },
+            // max-width 800
+            {
+                breakpoint: 800,
+                width: '100%',
+                height: '600px',
+                imagePercent: 80,
+                thumbnailsPercent: 20,
+                thumbnailsMargin: 20,
+                thumbnailMargin: 20
+            },
+            // max-width 400
+            {
+                breakpoint: 400,
+                preview: false
+            }
+        ];
+        for (var i = 0; i < this.images.length; i++) {
+            var imgObj = {
+                small: this.images[i].photourl,
+                medium: this.images[i].photourl,
+                big: this.images[i].photourl
+            };
+            this.galleryImages.push(imgObj);
+        }
+    };
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])(),
+        __metadata("design:type", Array)
+    ], GalleryitemComponent.prototype, "images", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])(),
+        __metadata("design:type", _model_album__WEBPACK_IMPORTED_MODULE_0__["Album"])
+    ], GalleryitemComponent.prototype, "album", void 0);
+    GalleryitemComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+            selector: 'app-galleryitem',
+            template: __webpack_require__(/*! ./galleryitem.component.html */ "./src/app/components/gallery/galleryitem/galleryitem.component.html"),
+            styles: [__webpack_require__(/*! ./galleryitem.component.scss */ "./src/app/components/gallery/galleryitem/galleryitem.component.scss")]
+        }),
+        __metadata("design:paramtypes", [])
+    ], GalleryitemComponent);
+    return GalleryitemComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/components/gallerymanager/gallerymanager.component.html":
 /*!*************************************************************************!*\
   !*** ./src/app/components/gallerymanager/gallerymanager.component.html ***!
@@ -940,7 +1050,7 @@ var GalleryComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"card manager-container\" *ngIf=\"!isPhotoManagerActive\">\n    <div class=\"card-header\">\n        <div>\n          <span>Album Manager</span>\n          <span class=\"album-add-btn\"><button class=\"btn btn-primary\"\n                (click)=\"addNewAlbum($event)\">New</button></span>\n        </div>\n    </div>\n    <div class=\"card-body\">\n      <ul class=\"album-manager-list\">\n        <li *ngFor=\"let album of albums; let i=index\">\n          <div class=\"album-manager-list-container\">\n          <div class=\"row\">\n            <div class=\"col-4\">\n              <a class=\"btn\" (click)=\"onViewAlbum($event, i)\">\n                <img class = \"album-manager-cover\" src=\"../../../assets/images/album-cover.jpg\">\n              </a>\n            </div>\n            <div class=\"col-8\">\n              <div *ngIf=\"!album.isEditing\">\n                <p><b>{{album.name}}</b></p>\n                <p>{{album.description}}</p>\n                <br>\n                <button class=\"btn btn-primary btn-album-operation\"\n                        (click)=\"onModifyAlbum($event, i)\">Modify</button>\n\n                <button class=\"btn btn-primary btn-album-operation\"\n                        (click)=\"onViewAlbum($event, i)\">View</button>\n\n                <button class=\"btn btn-danger btn-album-operation\"\n                        (click)=\"onDeleteAlbum($event, i)\">Delete</button>\n              </div>\n              <div *ngIf=\"album.isEditing\">\n                <input type=\"text\"\n                       [(ngModel)]=\"modifiedAlbumName\"\n                       class=\"form-control\"\n                       placeholder=\"Album Name\">\n                <textarea name=\"albumDescription\"\n                          [(ngModel)]=\"modifiedAlbumDescription\"\n                          class=\"form-control\"\n                          placeholder=\"Descriiption\"></textarea>\n                <button class=\"btn btn-primary btn-album-operation\"\n                        (click)=\"onEditAlbum($event, i)\">OK</button>\n                <button class=\"btn btn-default btn-album-operation\"\n                        (click)=\"onCancel($event, i)\">Cancel</button>\n              </div>\n\n            </div>\n          </div>\n        </div>\n        </li>\n      </ul>\n    </div>\n</div>\n<div class=\"card manager-container\" *ngIf=\"isPhotoManagerActive\">\n  <div class=\"card-header\">\n    <div>\n      <span>Photo Manager</span>\n      <span class=\"album-add-btn\">\n        <button class=\"btn btn-primary album-add-btn\"\n            (click)=\"addNewPhoto($event)\">\n            New\n        </button>\n        <button class=\"btn btn-danger album-add-btn\"\n        (click)=\"backToAlbumManager()\">\n          Close\n        </button>\n      </span>\n    </div>\n    <div>\n      <p class=\"photo-title-text\">{{ selectedAlbum.name }}</p>\n    </div>\n  </div>\n  <div class=\"card-body\">\n      <input type=\"file\"\n             accept=\"image/*\"\n             (change)=\"selectImageListener($event)\">\n  </div>\n  <div class=\"card-body\">\n    <ul class=\"album-manager-list\">\n      <li *ngFor=\"let photo of photos; let i=index\">\n        <div class=\"album-manager-list-container\">\n          <div class=\"row\">\n            <div class=\"col-4\">\n                <img class = \"album-manager-cover\" [src]=\"photo.photourl\">\n            </div>\n            <div class=\"col-8\">\n              <p>{{photo.id}}</p>\n              <p>{{photo.photourl}}</p>\n              <br>\n              <button class=\"btn btn-danger btn-album-operation\"\n              (click)=\"onDeletePhoto($event, i)\">Delete</button>\n            </div>\n          </div>\n        </div>\n      </li>\n    </ul>\n  </div>\n</div>\n"
+module.exports = "<div class=\"card manager-container\" *ngIf=\"!isPhotoManagerActive\">\n    <div class=\"card-header\">\n        <div>\n          <span>Album Manager</span>\n          <span class=\"album-add-btn\"><button class=\"btn btn-primary\"\n                (click)=\"addNewAlbum($event)\">New</button></span>\n        </div>\n    </div>\n    <div class=\"card-body\">\n      <ul class=\"album-manager-list\">\n        <li *ngFor=\"let album of albums; let i=index\">\n          <div class=\"album-manager-list-container\">\n          <div class=\"row\">\n            <div class=\"col-4\">\n              <a class=\"btn\" (click)=\"onViewAlbum($event, i)\">\n                <img class = \"album-manager-cover\" src=\"../../../assets/images/album-cover.jpg\">\n              </a>\n            </div>\n            <div class=\"col-8\">\n              <div *ngIf=\"!album.isEditing\">\n                <p><b>{{album.name}}</b></p>\n                <p>{{album.description}}</p>\n                <br>\n                <button class=\"btn btn-primary btn-album-operation\"\n                        (click)=\"onModifyAlbum($event, i)\">Modify</button>\n\n                <button class=\"btn btn-primary btn-album-operation\"\n                        (click)=\"onViewAlbum($event, i)\">View</button>\n\n                <button class=\"btn btn-danger btn-album-operation\"\n                        (click)=\"onDeleteAlbum($event, i)\">Delete</button>\n              </div>\n              <div *ngIf=\"album.isEditing\">\n                <input type=\"text\"\n                       [(ngModel)]=\"modifiedAlbumName\"\n                       class=\"form-control\"\n                       placeholder=\"Album Name\">\n                <textarea name=\"albumDescription\"\n                          [(ngModel)]=\"modifiedAlbumDescription\"\n                          class=\"form-control\"\n                          placeholder=\"Descriiption\"></textarea>\n                <button class=\"btn btn-primary btn-album-operation\"\n                        (click)=\"onEditAlbum($event, i)\">OK</button>\n                <button class=\"btn btn-default btn-album-operation\"\n                        (click)=\"onCancel($event, i)\">Cancel</button>\n              </div>\n\n            </div>\n          </div>\n        </div>\n        </li>\n      </ul>\n    </div>\n</div>\n<div class=\"card manager-container\" *ngIf=\"isPhotoManagerActive\">\n  <div class=\"card-header\">\n    <div>\n      <span>Photo Manager</span>\n      <span class=\"album-add-btn\">\n        <button class=\"btn btn-danger album-add-btn\"\n        (click)=\"backToAlbumManager()\">\n          Close\n        </button>\n      </span>\n    </div>\n    <div>\n      <p class=\"photo-title-text\">{{ selectedAlbum.name }}</p>\n    </div>\n  </div>\n  <div class=\"card-body\">\n      <input #myUpload\n             type=\"file\"\n             accept=\"image/*\"\n             (change)=\"selectImageListener($event)\">\n      <button *ngIf=\"showUploadButton\"\n             class=\"btn btn-primary album-add-btn\"\n             (click)=\"addNewPhoto($event)\">\n             Upload\n      </button>\n  </div>\n  <div class=\"card-body\">\n    <ul class=\"album-manager-list\">\n      <li *ngFor=\"let photo of photos; let i=index\">\n        <div class=\"album-manager-list-container\">\n          <div class=\"row\">\n            <div class=\"col-4\">\n                <img class = \"album-manager-cover\" [src]=\"photo.photourl\">\n            </div>\n            <div class=\"col-8\">\n              <p>{{photo.id}}</p>\n              <p>{{photo.photourl}}</p>\n              <br>\n              <button class=\"btn btn-danger btn-album-operation\"\n              (click)=\"onDeletePhoto($event, i)\">Delete</button>\n            </div>\n          </div>\n        </div>\n      </li>\n    </ul>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -982,6 +1092,7 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var GallerymanagerComponent = /** @class */ (function () {
     function GallerymanagerComponent(apiService, router) {
         this.apiService = apiService;
@@ -992,6 +1103,7 @@ var GallerymanagerComponent = /** @class */ (function () {
         this.apiService.getAllAlbums().subscribe(function (res) {
             _this.albums = res;
             _this.isPhotoManagerActive = false;
+            _this.showUploadButton = false;
             console.log(_this.albums);
         });
     };
@@ -1088,6 +1200,20 @@ var GallerymanagerComponent = /** @class */ (function () {
         this.albums.splice(0, 0, album);
     };
     GallerymanagerComponent.prototype.addNewPhoto = function ($event) {
+        var _this = this;
+        this.apiService.uploadPhoto(this.selectedAlbum.id, this.uploadFileName, this.uploadImage).subscribe(function (resp) {
+            if (resp['status'] && resp['status'] === 200) {
+                console.log('Uploaded photo successfully ...');
+                var photo = resp['photo'];
+                _this.photos.push(photo);
+                _this.myUploadVar.nativeElement.value = '';
+                _this.showUploadButton = false;
+            }
+            else {
+                console.log('Failed to upload photo ...');
+                alert(resp['error']);
+            }
+        });
     };
     GallerymanagerComponent.prototype.backToAlbumManager = function () {
         this.isPhotoManagerActive = false;
@@ -1098,25 +1224,14 @@ var GallerymanagerComponent = /** @class */ (function () {
     GallerymanagerComponent.prototype.readThis = function (inputValue) {
         var _this = this;
         var file = inputValue.files[0];
-        var myReader = new FileReader();
-        myReader.onloadend = function (e) {
-            _this.uploadImage = myReader.result;
-            var fileName = file.name;
-            var albumId = _this.selectedAlbum.id;
-            console.log(fileName);
-            _this.apiService.uploadPhoto(_this.selectedAlbum.id, fileName, myReader.result).subscribe(function (resp) {
-                if (resp['status'] && resp['status'] === 200) {
-                    console.log('Uploaded photo successfully ...');
-                    var photo = resp['photo'];
-                    _this.photos.push(photo);
-                }
-                else {
-                    console.log('Failed to upload photo ...');
-                    alert(resp['error']);
-                }
-            });
+        this.myReader = new FileReader();
+        this.myReader.onloadend = function (e) {
+            _this.uploadImage = _this.myReader.result;
+            _this.uploadFileName = file.name;
+            console.log(_this.uploadFileName);
+            _this.showUploadButton = true;
         };
-        myReader.readAsDataURL(file);
+        this.myReader.readAsDataURL(file);
     };
     GallerymanagerComponent.prototype.onDeletePhoto = function ($event, i) {
         var _this = this;
@@ -1132,6 +1247,10 @@ var GallerymanagerComponent = /** @class */ (function () {
             }
         });
     };
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["ViewChild"])('myUpload'),
+        __metadata("design:type", _angular_core__WEBPACK_IMPORTED_MODULE_2__["ElementRef"])
+    ], GallerymanagerComponent.prototype, "myUploadVar", void 0);
     GallerymanagerComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["Component"])({
             selector: 'app-gallerymanager',

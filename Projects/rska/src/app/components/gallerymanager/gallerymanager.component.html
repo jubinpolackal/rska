@@ -57,10 +57,6 @@
     <div>
       <span>Photo Manager</span>
       <span class="album-add-btn">
-        <button class="btn btn-primary album-add-btn"
-            (click)="addNewPhoto($event)">
-            New
-        </button>
         <button class="btn btn-danger album-add-btn"
         (click)="backToAlbumManager()">
           Close
@@ -72,9 +68,15 @@
     </div>
   </div>
   <div class="card-body">
-      <input type="file"
+      <input #myUpload
+             type="file"
              accept="image/*"
              (change)="selectImageListener($event)">
+      <button *ngIf="showUploadButton"
+             class="btn btn-primary album-add-btn"
+             (click)="addNewPhoto($event)">
+             Upload
+      </button>
   </div>
   <div class="card-body">
     <ul class="album-manager-list">
