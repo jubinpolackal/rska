@@ -1,0 +1,15 @@
+.gallery-column {
+    float: left;
+    width: 50%;
+    padding: 10px;
+  }
+  
+  .gallery-column img {
+    margin-top: 12px;
+  }
+
+  .gallery-row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }

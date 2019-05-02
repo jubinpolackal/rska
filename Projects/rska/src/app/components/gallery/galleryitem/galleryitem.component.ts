@@ -2,6 +2,7 @@ import { Album } from './../../../model/album';
 import { Component, OnInit, Input } from '@angular/core';
 import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation } from 'ngx-gallery';
 import { Photo } from '../../../model/photo';
+import { ApiService } from '../../../services/api.service';
 
 @Component({
   selector: 'app-galleryitem',
@@ -16,41 +17,48 @@ export class GalleryitemComponent implements OnInit {
   galleryOptions: NgxGalleryOptions[];
   galleryImages: NgxGalleryImage[];
 
-  constructor() { }
+  constructor(private apiService: ApiService) { 
+    this.galleryImages = [];
+  }
 
   ngOnInit() {
-    this.galleryOptions = [
-      {
-          width: '600px',
-          height: '400px',
-          thumbnailsColumns: 4,
-          imageAnimation: NgxGalleryAnimation.Slide
-      },
-      // max-width 800
-      {
-          breakpoint: 800,
-          width: '100%',
-          height: '600px',
-          imagePercent: 80,
-          thumbnailsPercent: 20,
-          thumbnailsMargin: 20,
-          thumbnailMargin: 20
-      },
-      // max-width 400
-      {
-          breakpoint: 400,
-          preview: false
+    this.apiService.getPhotos(this.album.id).subscribe(res => {
+      this.images = res;
+      console.log(this.images);
+      this.galleryOptions = [
+        {
+            width: '600px',
+            height: '400px',
+            thumbnailsColumns: 4,
+            imageAnimation: NgxGalleryAnimation.Slide
+        },
+        // max-width 800
+        {
+            breakpoint: 800,
+            width: '100%',
+            height: '600px',
+            imagePercent: 80,
+            thumbnailsPercent: 20,
+            thumbnailsMargin: 20,
+            thumbnailMargin: 20
+        },
+        // max-width 400
+        {
+            breakpoint: 400,
+            preview: false
+        }
+      ];
+  
+      for (let i = 0; i < this.images.length; i++) {
+        const imgObj = {
+            small: this.images[i].photourl,
+            medium: this.images[i].photourl,
+            big: this.images[i].photourl
+        };
+        this.galleryImages.push(imgObj);
       }
-    ];
+    });
 
-    for (let i = 0; i < this.images.length; i++) {
-      const imgObj = {
-          small: this.images[i].photourl,
-          medium: this.images[i].photourl,
-          big: this.images[i].photourl
-      };
-      this.galleryImages.push(imgObj);
-    }
   }
 
 }
