@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { catchError, tap, map } from 'rxjs/operators';
 import 'rxjs/add/operator/map';
 import { UtilityService } from './utility.service';
+import { Photo } from '../model/photo';
 
 const publicURL = '/public';
 
@@ -71,6 +72,12 @@ export class ApiService {
     return this.getPublic('/getalbums').map(res => res['albums'] as Album[]);
   }
 
+  public getPhotos(albumId) {
+    const method = '/getphotos/' + albumId;
+
+    return this.getPublic(method).map(res => res['photos'] as Photo[]);
+  }
+
   public updateAlbum(album) {
     const body = JSON.stringify(album);
     console.log('Update body content ...');
@@ -101,12 +108,6 @@ export class ApiService {
       albumid: albumId
     };
     return this.postProtected(body, '/album/upload');
-  }
-
-  public getPhotos(albumId) {
-    const method = '/getphotos/' + albumId;
-
-    return this.getPublic(method);
   }
 
   public deletePhoto(photoId, albumId) {
